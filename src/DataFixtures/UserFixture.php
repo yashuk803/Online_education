@@ -1,0 +1,58 @@
+<?php
+
+namespace App\DataFixtures;
+use App\Entity\User;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+class UserFixture extends BaseFixture
+{
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
+    protected function loadData(ObjectManager $manager)
+    {
+        $this->createMany(10, 'main_users', function($i) {
+            $user = new User();
+
+            $email = sprintf('spacebar%d@example.com', $i);
+            $slug = explode("@", $email);
+
+            $user->setFirstName($this->faker->userName);
+            $user->setSlug('@'. $slug[0]);
+            $user->setEmail($email);
+            $user->setCreatedAt($this->faker->dateTime);
+            $user->setUpdatedAt($this->faker->dateTime);
+
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'plainPassword'
+            ));
+            return $user;
+        });
+
+
+        $this->createMany(1, 'admin_users', function($i) {
+            $user = new User();
+            $user->setRoles(['ROLE_ADMIN']);
+            $email = sprintf('admin%d@thespacebar.com', $i);
+            $slug = explode("@", $email);
+
+            $user->setEmail($email);
+            $user->setSlug('@'. $slug[0]);
+            $user->setCreatedAt($this->faker->dateTime);
+            $user->setUpdatedAt($this->faker->dateTime);
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'plainPassword'
+            ));
+            return $user;
+        });
+
+        $manager->flush();
+    }
+}
