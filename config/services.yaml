@@ -29,3 +29,5 @@ services:
     app.security.login_form_authenticator:
         class: App\Security\LoginFormAuthenticator
         autowire: true
+
+    App\Course\Service\CoursePresentationServiceInterface: '@App\Course\Service\CoursePresentationService'

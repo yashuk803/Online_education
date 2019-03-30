@@ -31,6 +31,22 @@
     $("#search_input_box").slideUp("slow");
   });
 
+
+    $('a[href^="#"]').on('click', function(event) {
+      event.preventDefault();
+      var sc = $(this).attr("href"),
+          dn = $(sc).offset().top;
+
+      $('html, body').animate({scrollTop: dn}, 1000);
+
+    });
+    $('#course_form_cost').attr('readonly', true).val(0);
+    $('#paid').on('change', function () {
+        $('#course_form_cost').attr('readonly', false).val('')
+    });
+    $('#free').on('change', function () {
+      $('#course_form_cost').attr('readonly', true).val(0);
+    });
   /*----------------------------------------------------*/
   /*  Course Slider
     /*----------------------------------------------------*/

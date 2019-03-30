@@ -92,7 +92,7 @@ button:focus {
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
 .section_gap {
-  padding: 0 0 130px; }
+  padding: 68px 0; }
   @media (max-width: 991px) {
     .section_gap {
       padding: 70px 0; } }
@@ -396,13 +396,13 @@ button:focus {
   position: relative;
   background: url(../img/banner/banner.jpg) no-repeat center center;
   z-index: 1;
-  min-height: 392px;
+  min-height: 280px;
   padding-top: 0 !important; }
   .banner_area .banner_inner {
     position: relative;
     overflow: hidden;
     width: 100%;
-    min-height: 392px;
+    min-height: 280px;
     z-index: 1; }
     .banner_area .banner_inner .overlay {
       position: absolute;
