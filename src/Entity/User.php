@@ -45,6 +45,7 @@ class User implements UserInterface
 
     /**
      * @Vich\UploadableField(mapping="file_images", fileNameProperty="image")
+     *
      * @var File
      */
     private $imageFile;
@@ -92,9 +93,9 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->roles = array('ROLE_USER');
-        $this->createdAt = new \DateTime("now");
-        $this->updatedAt = new \DateTime("now");
+        $this->roles = ['ROLE_USER'];
+        $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -133,7 +134,7 @@ class User implements UserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
-        return array_unique($roles);
+        return \array_unique($roles);
     }
 
     public function setRoles(array $roles): self

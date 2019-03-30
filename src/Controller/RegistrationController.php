@@ -22,8 +22,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $slug = explode("@", $form->get('email')->getData());
+            $slug = \explode('@', $form->get('email')->getData());
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -31,14 +30,13 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setSlug('@'. $slug[0]);
+            $user->setSlug('@' . $slug[0]);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('login');
-
         }
 
         return $this->render('registration/register.html.twig', [
