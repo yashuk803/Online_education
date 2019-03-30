@@ -106,7 +106,7 @@
 
                         {% if (is_granted('ROLE_USER') or  is_granted('ROLE_ADMIN')) %}
                             <li class="nav-item"><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ path('logout') }}">{{ app.user.slug }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/{{ app.user.slug }}">{{ app.user.slug }}</a></li>
                         {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('login') }}">Login</a>
