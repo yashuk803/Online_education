@@ -8,6 +8,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixture extends BaseFixture
 {
+    public const USER_REFERENCE = 'user';
+    public const ADMIN_REFERENCE = 'admin';
+
     private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -17,7 +20,7 @@ class UserFixture extends BaseFixture
 
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(10, 'main_users', function ($i) {
+        $this->createMany(10, self::USER_REFERENCE, function ($i) {
             $user = new User();
 
             $email = \sprintf('spacebar%d@example.com', $i);
@@ -38,7 +41,7 @@ class UserFixture extends BaseFixture
         });
 
 
-        $this->createMany(1, 'admin_users', function ($i) {
+        $this->createMany(2, self::ADMIN_REFERENCE, function ($i) {
             $user = new User();
             $user->setRoles(['ROLE_ADMIN']);
             $email = \sprintf('admin%d@thespacebar.com', $i);

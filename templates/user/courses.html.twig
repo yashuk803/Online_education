@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app.user.slug }}{% endblock %}
+
+{% block body %}
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="banner_content text-center">
+                            <h2>Мои Курсы</h2>
+                            <div class="page_link">
+                                <a href="{{ path('index') }}">Главная</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+    <section class="blog_area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    {{ include('/user/_users_left_sidebar.html.twig') }}
+                </div>
+                <div class="col-lg-8">
+                    <div class="blog_left_sidebar">
+                        {% for course in courses %}
+                            <article class="row blog_item">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9">
+                                    <div class="blog_post">
+                                        {% if  course.video %}
+                                            <video width="400" height="300" controls="controls" poster="">
+                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                        type='video/ogg; codecs="theora, vorbis"'>
+                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                        type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                        type='video/webm; codecs="vp8, vorbis"'>
+                                                Элемент video не поддерживается вашим браузером.
+                                                <a href="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}">Скачайте
+                                                    видео</a>.
+                                            </video>
+                                        {% endif %}
+                                        <div class="blog_details">
+
+                                            <a href="{{ path('show-course', {'id': course.id}) }}">
+                                                <h2>{{ course.name }}</h2>
+                                            </a>
+
+                                            <p>{{ course.shortDescription }}</p>
+                                            <a href="{{ path('edit-course', {'id': course.id}) }}" class="blog_btn">
+                                                Редактировать курс
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -9,7 +9,7 @@ final class Collection implements \IteratorAggregate
     {
         $this->courses = $courses;
     }
-    public function addCategory(CourseModel $course): void
+    public function addCourse(CourseModel $course): void
     {
         $this->courses[] = $course;
     }

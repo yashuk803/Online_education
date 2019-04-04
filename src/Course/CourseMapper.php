@@ -1,20 +1,28 @@
 <?php
+
 namespace App\Course;
+
 use App\Entity\Course;
+
 final class CourseMapper
 {
     public static function entityToModel(Course $entity): CourseModel
     {
         $model = new CourseModel(
             $entity->getId(),
-            $entity->getAccessType(),
-            $entity->getCost(),
             $entity->getName(),
-            $entity->getPublicationDate()
+            $entity->getCost(),
+            $entity->getAccessType(),
+            $entity->getPublicationDate(),
+            $entity->getUser()->getId()
 
         );
-        $model->setDescription($entity->getDescription());
-        return $model;
 
+        $model->setDescription($entity->getDescription());
+        $model->setShortDescription($entity->getShortDescription());
+        $model->setVideo($entity->getVideo());
+        $model->setVideoFile($entity->getVideoFile());
+
+        return $model;
     }
 }

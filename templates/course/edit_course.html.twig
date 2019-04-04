@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit {{ course.name }}{% endblock %}
+
+{% block body %}
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="banner_content text-center">
+                            <h2>Редактирование курса  {{ course.name }}</h2>
+                            <div class="page_link">
+                                <a href="{{ path('index') }}">Главная</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+    <section class="blog_area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    {{ include('/course/_course_left_sidebar.html.twig') }}
+                </div>
+                <div class="col-lg-8">
+                    <div class="blog_left_sidebar">
+
+                        {% if lessons %}
+                        {% for lesson in lessons %}
+                            <article class="row blog_item">
+                                <div class="col-md-9">
+                                    <div class="blog_post">
+                                        <div class="blog_details">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                        {% else %}
+                            <article class="row blog_item">
+                                <div class="col-md-9">
+                                    <div class="blog_post">
+                                        <div class="blog_details">
+                                            <p class="text-center"><em>В курсе пока что нет ни одного урока.
+                                                    <br/>Добавьте свой первый урок в редакторе содержания курса.</em>
+
+                                            </p>
+                                            <p class="text-center">
+                                                <a href="#" class="btn btn-success">
+                                                    Добавить урок
+                                                </a>
+                                                <a href="#" class="btn btn-light">
+                                                    Редактировать информацию
+                                                </a>
+                                            </p>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

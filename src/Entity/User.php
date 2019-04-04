@@ -46,7 +46,7 @@ class User implements UserInterface
     private $firstName;
 
     /**
-     * @Vich\UploadableField(mapping="file_images", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="avatars", fileNameProperty="imageName")
      *
      * @var File
      */
@@ -102,7 +102,7 @@ class User implements UserInterface
     {
         $this->roles = ['ROLE_USER'];
         $this->createdAt = new \DateTime('now');
-        $this->updatedAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime();
         $this->courses = new ArrayCollection();
     }
 
@@ -205,13 +205,18 @@ class User implements UserInterface
         // otherwise the event listeners won't be called and the file is lost
         if ($image) {
             // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getImageFile(): ?string
+    {
+        return $this->imageFile;
     }
 
     public function setImageName(string $imageName): self

@@ -1,8 +1,14 @@
 <?php
+
 namespace App\Course\Service;
-use App\Course\CourseModel;
+
 use App\Course\Collection;
+
 interface CoursePresentationServiceInterface
 {
     public function getAll(): Collection;
+
+    public function findByUser($userId): Collection;
+
+    public function findById($id);
 }

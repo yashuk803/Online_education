@@ -8,8 +8,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Course|null find($id, $lockMode = null, $lockVersion = null)
- * @method Course|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|Course find($id, $lockMode = null, $lockVersion = null)
+ * @method null|Course findOneBy(array $criteria, array $orderBy = null)
  * @method Course[]    findAll()
  * @method Course[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
@@ -20,33 +20,22 @@ class CourseRepository extends ServiceEntityRepository implements CourseReposito
         parent::__construct($registry, Course::class);
     }
 
-
-    // /**
-    //  * @return Course[] Returns an array of Course objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByUser($userId)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.user = :user')
+            ->setParameter('user', $userId)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Course
+    public function findById($id)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

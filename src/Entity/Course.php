@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CourseRepository")
+ * @Vich\Uploadable
  */
 class Course
 {
@@ -13,6 +19,7 @@ class Course
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      */
     private $id;
 
@@ -33,7 +40,7 @@ class Course
     private $accessType;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $cost;
 
@@ -43,14 +50,52 @@ class Course
     private $publicationDate;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $shortDescription;
+
+    /**
+     * @Assert\File(
+     * maxSize = "500M",
+     * mimeTypes = {"video/mpeg", "video/mp4", "video/quicktime", "video/x-ms-wmv", "video/x-msvideo", "video/x-flv", "video/ogv"},
+     * mimeTypesMessage = "ce format de video est inconnu",
+     * uploadIniSizeErrorMessage = "uploaded file is larger than the upload_max_filesize PHP.ini setting",
+     * uploadFormSizeErrorMessage = "uploaded file is larger than allowed by the HTML file input field",
+     * uploadErrorMessage = "uploaded file could not be uploaded for some unknown reason",
+     * maxSizeMessage = "fichier trop volumineux"
+     * )
+     * @Vich\UploadableField(mapping="video", fileNameProperty="video")
+     *
+     * @var File
+     */
+    private $videoFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $video;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lesson", mappedBy="course", orphanRemoval=true)
+     */
+    private $lessons;
 
     public function __construct()
     {
         $this->accessType = 0;
         $this->publicationDate = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->lessons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,6 +171,91 @@ class Course
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(?string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    public function setVideoFile(File $video = null)
+    {
+        $this->videoFile = $video;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($video) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getVideoFile(): ?File
+    {
+        return $this->videoFile;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Lesson[]
+     */
+    public function getLessons(): Collection
+    {
+        return $this->lessons;
+    }
+
+    public function addLesson(Lesson $lesson): self
+    {
+        if (!$this->lessons->contains($lesson)) {
+            $this->lessons[] = $lesson;
+            $lesson->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesson(Lesson $lesson): self
+    {
+        if ($this->lessons->contains($lesson)) {
+            $this->lessons->removeElement($lesson);
+            // set the owning side to null (unless already changed)
+            if ($lesson->getCourse() === $this) {
+                $lesson->setCourse(null);
+            }
+        }
 
         return $this;
     }

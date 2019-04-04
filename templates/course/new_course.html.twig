@@ -29,29 +29,9 @@
                     Размещение курсов на Edustage бесплатное, если они открыты для всех желающих.
                 </div>
                 <div class="col-lg-9">
-                    {{ form_start(courseForm, { 'attr': {'class': 'contact_form'} }) }}
-                    <div class="form-group">
-                        {{ form_row(courseForm.name) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(courseForm.description) }}
-                    </div>
-
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="paid"
-                               name="accessType">
-                        <label class="custom-control-label" for="paid">Платный курс</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="free" checked
-                               name="accessType">
-                        <label class="custom-control-label" for="free">Бесплатный курс</label>
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(courseForm.cost) }}
-                    </div>
-                    <button class="btn primary-btn">Создать</button>
-                    {{ form_end(courseForm) }}
+                    {{ include('course/_form.html.twig', {
+                        button_text: 'Создать'
+                    }) }}
                 </div>
             </div>
         </div>
