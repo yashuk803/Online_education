@@ -69,7 +69,7 @@ class Course
      * uploadErrorMessage = "uploaded file could not be uploaded for some unknown reason",
      * maxSizeMessage = "fichier trop volumineux"
      * )
-     * @Vich\UploadableField(mapping="video", fileNameProperty="video")
+     * @Vich\UploadableField(mapping="video_courses", fileNameProperty="video")
      *
      * @var File
      */

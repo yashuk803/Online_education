@@ -10,53 +10,41 @@ use Symfony\Component\Finder\Finder;
 
 class CourseFixture extends BaseFixture implements DependentFixtureInterface
 {
-    private $parametrBag;
+    const COURSE_REFERENCE = 'course';
+
+    private $sourceDirectory;
+    private $targetDirectory;
 
     public function __construct(ContainerBagInterface $parameterBag)
     {
-        $this->parametrBag = $parameterBag;
+
+        $basePath =  $parameterBag->get('kernel.project_dir');
+
+        $this->sourceDirectory = $basePath . '/public/uploads/test_video';
+        $this->targetDirectory = $basePath . '/public/uploads/video/courses';
     }
+
 
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(10, 'course', function () {
+        $this->createMany(10, self::COURSE_REFERENCE, function () {
             $course = new Course();
 
-            $video = $this->getFakeVideoFiles();
             $faker = \Faker\Factory::create();
 
-            $nVideo = $faker->numberBetween(0, (\count($video)-1));
-            $user = $this->getRandomReference(UserFixture::USER_REFERENCE);
-            $course->setVideo($video[$nVideo]);
-
-            $course->setUser($user);
-
+            $course->setVideo($faker->file($this->sourceDirectory,  $this->targetDirectory, false));
+            $course->setUser($this->getRandomReference(UserFixture::USER_REFERENCE));
             $course->setShortDescription($faker->sentence(50));
             $course->setDescription($faker->sentence(50));
             $course->setName($faker->sentence(2));
             $course->setCost($faker->randomFloat());
+            $course->setUpdatedAt($this->faker->dateTime);
 
             return $course;
         });
 
         $manager->flush();
     }
-
-    private function getFakeVideoFiles()
-    {
-        $basePath =  $this->parametrBag->get('kernel.project_dir');
-
-        $finder = new Finder();
-
-        $finder->files()->name('*.mp4')->in($basePath . '/public/uploads/video');
-
-        foreach ($finder as $file) {
-            $fileName[] = $file->getRelativePathname();
-        }
-
-        return $fileName;
-    }
-
 
     public function getDependencies()
     {

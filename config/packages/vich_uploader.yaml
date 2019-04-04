@@ -5,6 +5,9 @@ vich_uploader:
         avatars:
             uri_prefix: '%app.path.avatar_images%'
             upload_destination: '%kernel.project_dir%/public%app.path.avatar_images%'
-        video:
-            uri_prefix: '%app.path.video_path%'
-            upload_destination: '%kernel.project_dir%/public%app.path.video_path%'
+        video_courses:
+            uri_prefix: '%app.path.video_path_courses%'
+            upload_destination: '%kernel.project_dir%/public%app.path.video_path_courses%'
+        video_lessons:
+            uri_prefix: '%app.path.video_path_lessons%'
+            upload_destination: '%kernel.project_dir%/public%app.path.video_path_lessons%'

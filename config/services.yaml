@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.path.avatar_images: /uploads/images/avatars
-    app.path.video_path: /uploads/video
+    app.path.video_path_courses: /uploads/video/courses
+    app.path.video_path_lessons: /uploads/video/lessons
 
 services:
     # default configuration for services in *this* file

@@ -15,6 +15,7 @@ class UserFixture extends BaseFixture
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
+
         $this->passwordEncoder = $passwordEncoder;
     }
 
