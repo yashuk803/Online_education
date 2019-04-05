@@ -3,6 +3,7 @@
 {% block title %}Edit {{ course.name }}{% endblock %}
 
 {% block body %}
+
     <!--================Home Banner Area =================-->
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
@@ -11,7 +12,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="banner_content text-center">
-                            <h2>Редактирование курса  {{ course.name }}</h2>
+                            <h2>Редактирование курса {{ course.name }}</h2>
                             <div class="page_link">
                                 <a href="{{ path('index') }}">Главная</a>
                             </div>
@@ -30,49 +31,67 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="blog_left_sidebar">
-
+                        <article class="row blog_item">
+                            <div class="col-md-9">
+                                <div class="blog_post">
+                                    <a href="#" class="btn btn-light right-contents">Редактировать информацию</a>
+                                    <div class="blog_details">
+                                        <h4>{{ course.name }}</h4>
+                                        <p>{{ course.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
                         {% if lessons %}
-                        {% for lesson in lessons %}
-                            <article class="row blog_item">
-                                <div class="col-md-9">
-                                    <div class="blog_post">
-                                        <div class="blog_details">
-
+                            {% for lesson in lessons %}
+                                <article class="row blog_item">
+                                    <div class="col-md-9">
+                                        <div class="blog_post">
+                                            <div class="blog_details">
+                                                <div class="row">
+                                                    <div class="col-md-10">{{ lesson.name }}</div>
+                                                    <div class="col-md-2">
+                                                        <a href="{{ path('edit-lesson', {'id': lesson.id}) }}">
+                                                            <i class="ti-pencil"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </article>
-                        {% endfor %}
-                        {% else %}
-                            <article class="row blog_item">
-                                <div class="col-md-9">
-                                    <div class="blog_post">
-                                        <div class="blog_details">
-                                            <p class="text-center"><em>В курсе пока что нет ни одного урока.
-                                                    <br/>Добавьте свой первый урок в редакторе содержания курса.</em>
-
-                                            </p>
-                                            <p class="text-center">
-                                                <a href="#" class="btn btn-success">
-                                                    Добавить урок
-                                                </a>
-                                                <a href="#" class="btn btn-light">
-                                                    Редактировать информацию
-                                                </a>
-                                            </p>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-
+                                </article>
+                            {% endfor %}
                         {% endif %}
+                        <article class="row blog_item">
+                            <div class="col-md-9">
+                                <div class="blog_post">
+                                    <div class="blog_details">
+                                        {% if not lessons %}
+                                            <p class="text-center warning-text"><em>В курсе пока что нет ни одного
+                                                    урока.<br/>Добавьте свой первый урок в редакторе содержания
+                                                    курса.</em>
+                                            </p>
+                                        {% endif %}
+                                        <div class="list-lessons"></div>
+                                        <form method="post" id="lessons" class="ajaxForm"
+                                              action="{{ path('edit-course', {'id': course.id }) }}">
+                                            <div class="form-group">
+                                                <label for="lesson_form_name" class="required">Название урока</label>
+                                                <input type="text" id="lesson_form_name" name="name"
+                                                       required="required" class="form-control form-control">
+                                            </div>
+                                            <input type="hidden" name="_csrf_token"
+                                                   value="{{ csrf_token('authenticate') }}">
+                                            <button type="submit" class="btn btn-success"> Добавить урок</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
 
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 {% endblock %}

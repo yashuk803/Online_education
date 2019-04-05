@@ -2,7 +2,7 @@
 
 namespace App\Course;
 
-use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Entity\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -20,6 +20,8 @@ final class CourseModel
     private $publicationDate;
     private $shortDescription;
     private $user;
+    private $video;
+    private $videoFile;
 
     public function __construct(
         int $id,
@@ -75,5 +77,24 @@ final class CourseModel
     public function getUser()
     {
         return $this->user;
+    }
+    public function setVideo($video): void
+    {
+        $this->video = $video;
+    }
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+    public function setVideoFile(File $video = null)
+    {
+        $this->videoFile = $video;
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($video) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 }

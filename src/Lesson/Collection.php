@@ -3,11 +3,10 @@
 
 namespace App\Lesson;
 
-use App\Lesson\LessonModel;
-
 final class Collection implements \IteratorAggregate
 {
     private $lesson;
+
     public function __construct(LessonModel ...$lesson)
     {
         $this->lesson = $lesson;

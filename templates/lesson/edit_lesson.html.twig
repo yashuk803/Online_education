@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Course{% endblock %}
+
+{% block body %}
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="banner_content text-center">
+                            <h2>Редактирование курса</h2>
+                            <div class="page_link">
+                                <a href="{{ path('index') }}">Главная</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+    <section class="contact_area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    Вы можете загружать видео до 200 Мегабайт. Вы можете сжать большой файл, с
+                    помощью нашего сервиса (Сохранить и сжать)
+                </div>
+                <div class="col-lg-9">
+                    {{ include('lesson/_form.html.twig', {
+                        button_text: 'Редактировать'
+                    }) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

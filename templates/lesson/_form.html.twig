@@ -1,0 +1,6 @@
+{{ form_start(lessonForm, { 'attr': {'class': 'contact_form'} }) }}
+  {{ form_row(lessonForm.name) }}
+  {{ form_row(lessonForm.description) }}
+  {{ form_row(lessonForm.videoFile) }}
+<button type="submit" class="btn primary-btn">{{ button_text }}</button>
+{{ form_end(lessonForm) }}

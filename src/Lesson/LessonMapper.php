@@ -17,6 +17,7 @@ class LessonMapper
         );
 
         $model->setDescription($entity->getDescription());
+
         return $model;
     }
 }

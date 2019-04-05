@@ -9,7 +9,6 @@ use App\Lesson\Repository\LessonRepositoryInterface;
 
 final class LessonPresentationService implements LessonPresentationServiceInterface
 {
-
     private $lessonRepository;
 
     public function __construct(LessonRepositoryInterface $lessonRepository)
@@ -31,10 +30,25 @@ final class LessonPresentationService implements LessonPresentationServiceInterf
         return $collection;
     }
 
-    public function findByCourse($id): LessonModel
+    public function findByCourse(int $courseId): Collection
     {
-        $courses = $this->lessonRepository->findByCourse($id);
+        $lessons = $this->lessonRepository->findByCourse($courseId);
 
-        return   LessonMapper::entityToModel($courses);
+        $collection = new Collection();
+
+        foreach ($lessons as $course) {
+            $collection->addLesson(
+                LessonMapper::entityToModel($course)
+            );
+        }
+
+        return $collection;
+    }
+
+    public function findById(int $id): LessonModel
+    {
+        $lesson = $this->lessonRepository->findById($id);
+
+        return   LessonMapper::entityToModel($lesson);
     }
 }

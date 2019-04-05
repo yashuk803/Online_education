@@ -33,3 +33,4 @@ services:
         autowire: true
 
     App\Course\Service\CoursePresentationServiceInterface: '@App\Course\Service\CoursePresentationService'
+    App\Lesson\Service\LessonPresentationServiceInterface: '@App\Lesson\Service\LessonPresentationService'

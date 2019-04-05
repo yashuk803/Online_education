@@ -81,5 +81,4 @@ abstract class BaseFixture extends Fixture
 
         return $references;
     }
-
 }

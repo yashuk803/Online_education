@@ -3,8 +3,6 @@
 
 namespace App\DataFixtures;
 
-
-use App\Entity\Course;
 use App\Entity\Lesson;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -19,7 +17,6 @@ class LessonFixture extends BaseFixture implements DependentFixtureInterface
 
     public function __construct(ContainerBagInterface $parameterBag)
     {
-
         $basePath =  $parameterBag->get('kernel.project_dir');
 
         $this->sourceDirectory = $basePath . '/public/uploads/test_video';
@@ -33,12 +30,13 @@ class LessonFixture extends BaseFixture implements DependentFixtureInterface
 
             $faker = \Faker\Factory::create();
 
-            $lesson->setVideo($faker->file($this->sourceDirectory,  $this->targetDirectory , false));
+            $lesson->setVideo($faker->file($this->sourceDirectory, $this->targetDirectory, false));
             $lesson->setCourse($this->getRandomReference(CourseFixture::COURSE_REFERENCE));
             $lesson->setDescription($faker->sentence(5));
             $lesson->setName($faker->sentence(2));
             $lesson->setCreatedAt($this->faker->dateTime);
             $lesson->setUpdatedAt($this->faker->dateTime);
+
             return $lesson;
         });
 

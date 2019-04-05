@@ -5,8 +5,6 @@ namespace App\User;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Class CourseModel
- *
  * @Vich\Uploadable
  */
 final class UserModel

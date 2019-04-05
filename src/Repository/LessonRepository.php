@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Lesson;
+use App\Lesson\Repository\LessonRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,39 +13,30 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Lesson[]    findAll()
  * @method Lesson[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LessonRepository extends ServiceEntityRepository
+class LessonRepository extends ServiceEntityRepository implements lessonRepositoryInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Lesson::class);
     }
 
-    // /**
-    //  * @return Lesson[] Returns an array of Lesson objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByCourse(int $courseId)
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('l.course = :course')
+            ->setParameter('course', $courseId)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Lesson
+    public function findById(int $id)
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('l.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult()
-        ;
+            ;
     }
-    */
 }

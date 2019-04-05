@@ -6,7 +6,6 @@ use App\Entity\Course;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
-use Symfony\Component\Finder\Finder;
 
 class CourseFixture extends BaseFixture implements DependentFixtureInterface
 {
@@ -17,7 +16,6 @@ class CourseFixture extends BaseFixture implements DependentFixtureInterface
 
     public function __construct(ContainerBagInterface $parameterBag)
     {
-
         $basePath =  $parameterBag->get('kernel.project_dir');
 
         $this->sourceDirectory = $basePath . '/public/uploads/test_video';
@@ -32,7 +30,7 @@ class CourseFixture extends BaseFixture implements DependentFixtureInterface
 
             $faker = \Faker\Factory::create();
 
-            $course->setVideo($faker->file($this->sourceDirectory,  $this->targetDirectory, false));
+            $course->setVideo($faker->file($this->sourceDirectory, $this->targetDirectory, false));
             $course->setUser($this->getRandomReference(UserFixture::USER_REFERENCE));
             $course->setShortDescription($faker->sentence(50));
             $course->setDescription($faker->sentence(50));
