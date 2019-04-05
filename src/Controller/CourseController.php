@@ -3,12 +3,9 @@
 namespace App\Controller;
 
 use App\Course\Repository\CourseRepositoryInterface;
-use App\Course\Service\CoursePresentationServiceInterface;
 use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Form\CourseFormType;
-use App\Form\LessonFormType;
-use App\Form\RegistrationFormType;
 use App\Lesson\Service\LessonPresentationServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -29,8 +26,7 @@ class CourseController extends AbstractController
     public function __construct(
         CourseRepositoryInterface $coursePresentation,
         LessonPresentationServiceInterface $lessonPresentation
-    )
-    {
+    ) {
         $this->coursePresentation = $coursePresentation;
         $this->lessonPresentation = $lessonPresentation;
     }
@@ -85,8 +81,8 @@ class CourseController extends AbstractController
             throw $this->createAccessDeniedException('Access denied');
         }
         $lesson = new Lesson();
-        if ($request->isXmlHttpRequest()) {
 
+        if ($request->isXmlHttpRequest()) {
             $entityManager = $this->getDoctrine()->getManager();
             $lesson->setCourse($course);
             $lesson->setName($request->request->get('name'));
@@ -100,8 +96,9 @@ class CourseController extends AbstractController
             $jsonObject = $serializer->serialize($lesson, 'json', [
                 'circular_reference_handler' => function ($object) {
                     return $object->getId();
-                }
+                },
             ]);
+
             return new JsonResponse($jsonObject, 200, [], true);
         }
 

@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-class LessonController  extends AbstractController
+
+class LessonController extends AbstractController
 {
 
     /**
@@ -22,9 +23,7 @@ class LessonController  extends AbstractController
         Request $request,
         AuthorizationCheckerInterface $authChecker,
         int $id
-    ): Response
-    {
-
+    ): Response {
         $course = new Lesson();
         $form = $this->createForm(LessonFormType::class, $course);
         $form->handleRequest($request);
