@@ -18,15 +18,13 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class LessonController extends AbstractController
 {
-
     private $lessonPresentation;
     private $params;
 
     public function __construct(
         LessonRepositoryInterface $lessonPresentation,
         ParameterBagInterface $params
-    )
-    {
+    ) {
         $this->lessonPresentation = $lessonPresentation;
         $this->params = $params;
     }
@@ -48,12 +46,12 @@ class LessonController extends AbstractController
 
         $form = $this->createForm(LessonFormType::class, $lesson);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
 
-            if($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
-
-                $pathSave = $this->params->get('kernel.project_dir').'/public'.$this->params->get('app.path.video_path_lessons');
+            if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
+                $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_lessons');
                 $transcoding = new Transcoding($lesson->getVideoFile(), $pathSave, $originName, new WebM());
                 $fileName = $transcoding->saveVideo();
 
@@ -73,5 +71,4 @@ class LessonController extends AbstractController
             'lessonForm' => $form->createView(),
         ]);
     }
-
 }

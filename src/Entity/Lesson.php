@@ -171,12 +171,13 @@ class Lesson
     /**
      * @ORM\PostRemove
      */
-    public function removeUpload() {
+    public function removeUpload()
+    {
         // ** Original Code used file but logo has the name in it.
 
-        if(file_exists($this->getAbsolutePath())) {
+        if (\file_exists($this->getAbsolutePath())) {
             if ($this->getUploadRootDir() . $this->logo = $this->getAbsolutePath()) {
-                unlink($this->logo);
+                \unlink($this->logo);
             }
         }
     }

@@ -3,7 +3,6 @@
 
 namespace App\Utils;
 
-
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\FormatInterface;
 use FFMpeg\Format\Video\WebM;
@@ -32,7 +31,6 @@ class Transcoding
         $this->fileName = $this->getBaseName($fileName);
         $this->expansion = $this->getExpansion($format);
         $this->format = $format;
-
     }
 
     public function saveVideo()
@@ -41,26 +39,31 @@ class Transcoding
 
         $ffmpeg = FFMpeg::create();
 
-        $ffmpeg->open($this->file)->save($this->format, $this->path. $this->fileName . self::WEBM);
+        $ffmpeg->open($this->file)->save($this->format, $this->path . $this->fileName . self::WEBM);
+
         return $this->fileName . self::WEBM;
     }
 
     private function getBaseName($fileName)
     {
-        $list = explode('.', $fileName);
+        $list = \explode('.', $fileName);
 
         return $list[0];
     }
     private function getExpansion($format)
     {
-          if($format instanceof WebM) {
-              return new WebM();
-          } elseif ($format instanceof X264){
-              return new X264();
-          } elseif ($format instanceof WMV) {
-              return new WMV();
-          } else {
-              return new X264();
-          }
+        if ($format instanceof WebM) {
+            return new WebM();
+        }
+
+        if ($format instanceof X264) {
+            return new X264();
+        }
+
+        if ($format instanceof WMV) {
+            return new WMV();
+        }
+
+        return new X264();
     }
 }

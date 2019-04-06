@@ -37,6 +37,7 @@ class CourseController extends AbstractController
     public function index(int $id): Response
     {
         $course = $this->coursePresentation->findById($id);
+
         return $this->render('course/index.html.twig', [
             'course' => $course,
         ]);
@@ -117,6 +118,7 @@ class CourseController extends AbstractController
     public function show(int $id): Response
     {
         $course = $this->coursePresentation->findById($id);
+
         return $this->render('course/show.html.twig', [
             'course' => $course,
         ]);
@@ -134,10 +136,11 @@ class CourseController extends AbstractController
      *
      * @Route("/course/{id}/syllabus", name="syllabus-course", requirements={"id"="^\d+$"})
      */
-    public function syllabus(int $id):Response
+    public function syllabus(int $id): Response
     {
         $course = $this->coursePresentation->findById($id);
         $lessons = $this->lessonPresentation->findByCourse($id);
+
         return $this->render('course/syllabus.html.twig', [
             'course' => $course,
             'lessons' => $lessons,
