@@ -32,18 +32,21 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/course", name="courses")
-     *
+     * @Route("/courses/", name="courses")
      */
-    public function index()
+    public function index(int $id): Response
     {
+        $course = $this->coursePresentation->findById($id);
+        return $this->render('course/index.html.twig', [
+            'course' => $course,
+        ]);
     }
 
     /**
      * @IsGranted("ROLE_USER")
      * @Route("/new-course", name="new-course")
      */
-    public function newCourse(Request $request, AuthorizationCheckerInterface $authChecker): Response
+    public function create(Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
         $course = new Course();
         $form = $this->createForm(CourseFormType::class, $course);
@@ -59,7 +62,7 @@ class CourseController extends AbstractController
             return $this->redirect('/edit-course/' . $course->getId());
         }
 
-        return $this->render('course/new_course.html.twig', [
+        return $this->render('course/create.html.twig', [
             'courseForm' => $form->createView(),
         ]);
     }
@@ -68,7 +71,7 @@ class CourseController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @Route("/edit-course/{id}", name="edit-course", requirements={"id"="^\d+$"})
      */
-    public function editCourse(Request $request, int $id)
+    public function edit(Request $request, int $id)
     {
         $course = $this->coursePresentation->findById($id);
         $lessons = $this->lessonPresentation->findByCourse($id);
@@ -102,33 +105,42 @@ class CourseController extends AbstractController
             return new JsonResponse($jsonObject, 200, [], true);
         }
 
-        return $this->render('course/edit_course.html.twig', [
+        return $this->render('course/edit.html.twig', [
             'course' => $course,
             'lessons' => $lessons,
         ]);
     }
 
     /**
-     *
      * @Route("/course/{id}", name="show-course", requirements={"id"="^\d+$"})
      */
-    public function showCourse()
+    public function show(int $id): Response
     {
+        $course = $this->coursePresentation->findById($id);
+        return $this->render('course/show.html.twig', [
+            'course' => $course,
+        ]);
     }
 
     /**
      *
      * @Route("/course/{id}/reviews", name="reviews-course", requirements={"id"="^\d+$"})
      */
-    public function reviewCourse()
+    public function review()
     {
     }
 
     /**
      *
-     * @Route("/course/{id}/reviews", name="syllabus-course", requirements={"id"="^\d+$"})
+     * @Route("/course/{id}/syllabus", name="syllabus-course", requirements={"id"="^\d+$"})
      */
-    public function syllabusCourse()
+    public function syllabus(int $id):Response
     {
+        $course = $this->coursePresentation->findById($id);
+        $lessons = $this->lessonPresentation->findByCourse($id);
+        return $this->render('course/syllabus.html.twig', [
+            'course' => $course,
+            'lessons' => $lessons,
+        ]);
     }
 }

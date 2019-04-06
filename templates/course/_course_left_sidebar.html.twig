@@ -3,28 +3,28 @@
         <h3 class="widget_title">Меню</h3>
         <div class="media post_item">
             <div class="media-body">
-                <a href="#">
+                <a href="{{ path('show-course', {'id': app.request.get('id')}) }}">
                     <h3>Информация</h3>
                 </a>
             </div>
         </div>
         <div class="media post_item">
             <div class="media-body">
-                <a href="reviews">
+                <a href="#">
                     <h3>Отзывы</h3>
                 </a>
             </div>
         </div>
         <div class="media post_item">
             <div class="media-body">
-                <a href="syllabus">
+                <a href="{{ path('syllabus-course', {'id': app.request.get('id')}) }}">
                     <h3>Содержание</h3>
                 </a>
             </div>
         </div>
         <div class="media post_item">
             <div class="media-body">
-                <a href="news">
+                <a href="#">
                     <h3>Новости</h3>
                 </a>
             </div>

@@ -21,7 +21,6 @@ final class CourseMapper
         $model->setDescription($entity->getDescription());
         $model->setShortDescription($entity->getShortDescription());
         $model->setVideo($entity->getVideo());
-        $model->setVideoFile($entity->getVideoFile());
 
         return $model;
     }

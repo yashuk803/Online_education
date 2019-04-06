@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit {{ course.name }}{% endblock %}
+
+{% block body %}
+
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="banner_content text-center">
+                            <h2>Содержание курса {{ course.name }}</h2>
+                            <div class="page_link">
+                                <a href="{{ path('index') }}">Главная</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+    <section class="blog_area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    {{ include('/course/_course_left_sidebar.html.twig') }}
+                </div>
+                <div class="col-lg-8">
+                    <div class="blog_left_sidebar">
+                        <article class="row blog_item">
+                            <div class="col-md-9">
+                                <div class="blog_post">
+                                    <div class="blog_details">
+                                        <h4>{{ course.name }}</h4>
+                                        <p>{{ course.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        {% if lessons %}
+                            {% for lesson in lessons %}
+                                <article class="row blog_item">
+                                    <div class="col-md-9">
+                                        <div class="blog_post">
+                                            <div class="blog_details">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        {% if  lesson.video %}
+                                                            <video width="400" height="300" controls="controls" poster="">
+                                                                <source src="{{ vich_uploader_asset(lesson, 'videoFile', 'App\\Entity\\Lesson') }}"
+                                                                        type='video/ogg; codecs="theora, vorbis"'>
+                                                                <source src="{{ vich_uploader_asset(lesson, 'videoFile', 'App\\Entity\\Lesson') }}"
+                                                                        type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                                                                <source src="{{ vich_uploader_asset(lesson, 'videoFile', 'App\\Entity\\Lesson') }}"
+                                                                        type='video/webm; codecs="vp8, vorbis"'>
+                                                                Элемент video не поддерживается вашим браузером.
+                                                                <a href="{{ vich_uploader_asset(lesson, 'videoFile', 'App\\Entity\\Lesson') }}">Скачайте
+                                                                    видео</a>.
+                                                            </video>
+                                                        {% endif %}
+                                                        <h2> {{ lesson.name }}</h2>
+                                                        <p>{{ lesson.description }}</p>
+                                                        <hr>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

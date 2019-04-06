@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Course{% endblock %}
+{% block title %}Edit Lessons{% endblock %}
 
 {% block body %}
     <!--================Home Banner Area =================-->
@@ -25,14 +25,12 @@
     <section class="contact_area section_gap">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    Вы можете загружать видео до 200 Мегабайт. Вы можете сжать большой файл, с
-                    помощью нашего сервиса (Сохранить и сжать)
+                <div class="col-lg-3 alert-warning">
+                        Вы можете загружать видео до 200 Мегабайт. Вы можете сжать большой файл, с
+                        помощью нашего сервиса (Сохранить и сжать)
                 </div>
                 <div class="col-lg-9">
-                    {{ include('lesson/_form.html.twig', {
-                        button_text: 'Редактировать'
-                    }) }}
+                    {{ include('lesson/_form.html.twig') }}
                 </div>
             </div>
         </div>

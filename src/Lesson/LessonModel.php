@@ -3,6 +3,7 @@
 
 namespace App\Lesson;
 
+use Vich\UploaderBundle\Entity\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -15,6 +16,7 @@ class LessonModel
     private $description;
     private $createdAt;
     private $course;
+    private $video;
 
     public function __construct(
         int $id,
@@ -53,5 +55,24 @@ class LessonModel
     public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
+    }
+    public function setVideo($video): void
+    {
+        $this->video = $video;
+    }
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+    public function setVideoFile(File $video = null)
+    {
+        $this->videoFile = $video;
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($video) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 }

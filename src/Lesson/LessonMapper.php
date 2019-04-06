@@ -17,6 +17,8 @@ class LessonMapper
         );
 
         $model->setDescription($entity->getDescription());
+        $model->setVideo($entity->getVideo());
+        $model->setVideoFile($entity->getVideoFile());
 
         return $model;
     }
