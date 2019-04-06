@@ -49,6 +49,7 @@
                                             <div class="blog_details">
                                                 <div class="row">
                                                     <div class="col-md-10">
+                                                        <h3>Урок № {{ loop.index }}</h3>
                                                         {% if  lesson.video %}
                                                             <video width="400" height="300" controls="controls" poster="">
                                                                 <source src="{{ vich_uploader_asset(lesson, 'videoFile', 'App\\Entity\\Lesson') }}"

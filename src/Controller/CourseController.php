@@ -7,8 +7,12 @@ use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Form\CourseFormType;
 use App\Lesson\Service\LessonPresentationServiceInterface;
+use App\Utils\Transcoding;
+use FFMpeg\Format\Video\WebM;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,24 +26,27 @@ class CourseController extends AbstractController
 {
     private $coursePresentation;
     private $lessonPresentation;
+    private $params;
 
     public function __construct(
         CourseRepositoryInterface $coursePresentation,
-        LessonPresentationServiceInterface $lessonPresentation
+        LessonPresentationServiceInterface $lessonPresentation,
+        ParameterBagInterface $params
     ) {
         $this->coursePresentation = $coursePresentation;
         $this->lessonPresentation = $lessonPresentation;
+        $this->params = $params;
     }
 
     /**
      * @Route("/courses/", name="courses")
      */
-    public function index(int $id): Response
+    public function index(): Response
     {
-        $course = $this->coursePresentation->findById($id);
+        $courses = $this->coursePresentation->findAll();
 
         return $this->render('course/index.html.twig', [
-            'course' => $course,
+            'courses' => $courses,
         ]);
     }
 
@@ -56,6 +63,18 @@ class CourseController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $course->setUser($this->getUser());
+            if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
+                $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
+                $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_courses');
+                $transcoding = new Transcoding($course->getVideoFile(), $pathSave, $originName, new WebM());
+                $fileName = $transcoding->saveVideo();
+
+                $file = new File($course->getVideoFile());
+                $course->setVideoFile($file);
+                $course->setVideo($fileName);
+            }
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($course);
             $entityManager->flush();

@@ -35,7 +35,7 @@ class CourseFixture extends BaseFixture implements DependentFixtureInterface
             $course->setShortDescription($faker->sentence(50));
             $course->setDescription($faker->sentence(50));
             $course->setName($faker->sentence(2));
-            $course->setCost($faker->randomFloat());
+            $course->setCost($faker->randomNumber(2));
             $course->setUpdatedAt($this->faker->dateTime);
 
             return $course;

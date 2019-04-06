@@ -39,10 +39,7 @@ class Course
      */
     private $accessType;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $cost;
+
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -89,6 +86,11 @@ class Course
      * @ORM\OneToMany(targetEntity="App\Entity\Lesson", mappedBy="course", orphanRemoval=true)
      */
     private $lessons;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2, options={"default":"0"})
+     */
+    private $cost;
 
     public function __construct()
     {
@@ -139,17 +141,7 @@ class Course
         return $this;
     }
 
-    public function getCost()
-    {
-        return $this->cost;
-    }
 
-    public function setCost($cost): self
-    {
-        $this->cost = $cost;
-
-        return $this;
-    }
 
     public function getPublicationDate(): ?\DateTimeInterface
     {
@@ -256,6 +248,18 @@ class Course
                 $lesson->setCourse(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    public function setCost($cost): self
+    {
+        $this->cost = $cost;
 
         return $this;
     }
