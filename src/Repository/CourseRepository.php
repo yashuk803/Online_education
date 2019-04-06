@@ -43,7 +43,7 @@ class CourseRepository extends ServiceEntityRepository implements CourseReposito
     {
         return $this->createQueryBuilder('c')
             ->orderBy('c.id', 'DESC')
-            ->setMaxResults( 5 )
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
             ;

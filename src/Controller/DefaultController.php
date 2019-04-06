@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Course\Repository\CourseRepositoryInterface;
-use App\Course\Service\CoursePresentationServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +28,7 @@ class DefaultController extends AbstractController
 
 
         return $this->render('default/index.html.twig', [
-                'courses' => $courses
+                'courses' => $courses,
             ]);
     }
 }

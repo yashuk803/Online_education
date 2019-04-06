@@ -13,5 +13,4 @@ interface CoursePresentationServiceInterface
     public function findById($id);
 
     public function getLastFiveCourses(): Collection;
-
 }
