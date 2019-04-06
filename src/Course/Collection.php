@@ -5,6 +5,7 @@ namespace App\Course;
 final class Collection implements \IteratorAggregate
 {
     private $courses;
+
     public function __construct(CourseModel ...$courses)
     {
         $this->courses = $courses;

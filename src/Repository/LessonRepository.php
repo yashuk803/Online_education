@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Lesson\Repository\LessonRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -20,7 +21,7 @@ class LessonRepository extends ServiceEntityRepository implements lessonReposito
         parent::__construct($registry, Lesson::class);
     }
 
-    public function findByCourse(int $courseId)
+    public function findByCourse(int $courseId): Course
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.course = :course')

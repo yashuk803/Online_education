@@ -10,9 +10,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * The controller builds the form and, on submit, encodes the plain password and saves the user.
+ *
+ * @package App\Controller
+ * @author Mariia Tarantsova <yashuk803@gmail.com>
+ */
 class RegistrationController extends AbstractController
 {
     /**
+     * Render form Register.
+     *
      * @Route("/register", name="register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
@@ -23,6 +31,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = \explode('@', $form->get('email')->getData());
+            // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,

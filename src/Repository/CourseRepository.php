@@ -20,7 +20,7 @@ class CourseRepository extends ServiceEntityRepository implements CourseReposito
         parent::__construct($registry, Course::class);
     }
 
-    public function findByUser($userId)
+    public function findByUser($userId): Course
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.user = :user')

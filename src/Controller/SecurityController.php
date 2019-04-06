@@ -9,6 +9,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+/**
+ * Controller used to manage the application security.
+ *
+ * @author Mariia Tarantsova <yashuk803@gmail.com>
+ */
 class SecurityController extends AbstractController
 {
     use TargetPathTrait;
@@ -29,6 +34,8 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * This is the route the user can use to logout.
+     *
      * @Route("/logout", name="logout")
      */
     public function logoutAction(): void

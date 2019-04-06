@@ -10,6 +10,14 @@ use FFMpeg\Format\Video\WMV;
 use FFMpeg\Format\Video\X264;
 use Symfony\Component\HttpFoundation\File\File;
 
+/**
+ * Helper Class fo transcoding video file in
+ * other format (WebM, WMV, X264).
+ *
+ *
+ * @package App\Utils
+ * @author Mariia Tarantsova <yashuk803@gmail.com>
+ */
 class Transcoding
 {
     const KILOBITRATE = 200;
@@ -18,10 +26,34 @@ class Transcoding
     const WMV  = '.wmv';
     const WEBM = '.webm';
 
+    /**
+     * A file in the file system.
+     *
+     * @var File
+     */
     private $file;
+
+    /**
+     * Path where need save video file
+     *
+     * @var string
+     */
     private $path;
+
+    /*
+     * @var string
+     */
     private $fileName;
+
+    /**
+     *
+     * @var FormatInterface
+     */
     private $format;
+
+    /**
+     * @var WebM|WMV|X264
+     */
     private $expansion;
 
     public function __construct(File $file, string $path, string $fileName, FormatInterface $format)
@@ -33,6 +65,12 @@ class Transcoding
         $this->format = $format;
     }
 
+    /**
+     * Transcode videos using the FFMpeg\Media\Video:save method.
+     * Returns the name of the file with the desired extension.
+     *
+     * @return string
+     */
     public function saveVideo()
     {
         $this->format->setKiloBitrate(self::KILOBITRATE);
@@ -50,6 +88,13 @@ class Transcoding
 
         return $list[0];
     }
+
+    /**
+     * Return expansion format file
+     *
+     * @param $format
+     * @return WebM|WMV|X264
+     */
     private function getExpansion($format)
     {
         if ($format instanceof WebM) {

@@ -7,9 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @author Mariia Tarantsova <yashuk803@gmail.com>
+ */
 class DefaultController extends AbstractController
 {
     private $coursePresentation;
+
     public function __construct(CourseRepositoryInterface $coursePresentation)
     {
         $this->coursePresentation = $coursePresentation;

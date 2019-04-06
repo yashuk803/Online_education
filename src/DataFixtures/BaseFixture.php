@@ -11,9 +11,15 @@ abstract class BaseFixture extends Fixture
 {
     /** @var ObjectManager */
     private $manager;
+
     /** @var Generator */
     protected $faker;
+
+    /**
+     * @var array
+     */
     private $referencesIndex = [];
+
     abstract protected function loadData(ObjectManager $manager);
 
 
@@ -52,6 +58,13 @@ abstract class BaseFixture extends Fixture
             $this->addReference(\sprintf('%s_%d', $groupName, $i), $entity);
         }
     }
+
+    /**
+     * Method that returns just one object
+     *
+     * @param string $groupName
+     * @return object
+     */
     protected function getRandomReference(string $groupName)
     {
         if (!isset($this->referencesIndex[$groupName])) {
@@ -70,15 +83,5 @@ abstract class BaseFixture extends Fixture
         $randomReferenceKey = $this->faker->randomElement($this->referencesIndex[$groupName]);
 
         return $this->getReference($randomReferenceKey);
-    }
-    protected function getRandomReferences(string $className, int $count)
-    {
-        $references = [];
-
-        while (\count($references) < $count) {
-            $references[] = $this->getRandomReference($className);
-        }
-
-        return $references;
     }
 }

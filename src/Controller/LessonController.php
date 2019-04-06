@@ -16,9 +16,21 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+/**
+ * Controller used to any registered users edit lessons.
+ *
+ * @author Mariia Tarantsova <yashuk803@gmail.com>
+ */
 class LessonController extends AbstractController
 {
+    /**
+     * @var LessonRepositoryInterface
+     */
     private $lessonPresentation;
+
+    /**
+     * @var ParameterBagInterface
+     */
     private $params;
 
     public function __construct(
@@ -30,8 +42,10 @@ class LessonController extends AbstractController
     }
 
     /**
+     * Displays a form to edit an existing Lesson entity.
+     *
      * @IsGranted("ROLE_USER")
-     * @Route("/edit-lesson/{id}", methods={"GET", "POST"}, name="edit-lesson", requirements={"id"="^\d+$"})
+     * @Route("/edit-lesson/{id}", name="edit-lesson", requirements={"id"="^\d+$"})
      */
     public function edit(
         Request $request,
@@ -51,6 +65,7 @@ class LessonController extends AbstractController
             if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
                 $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
                 $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_lessons');
+                //This help transcoding video in WebM format, when client want to squeeze video file
                 $transcoding = new Transcoding($lesson->getVideoFile(), $pathSave, $originName, new WebM());
                 $fileName = $transcoding->saveVideo();
 

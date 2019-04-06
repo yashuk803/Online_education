@@ -22,10 +22,28 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
+/**
+ * Controller used to manage create, edit courses
+ * contents in the public part of the site.
+ *
+ * @author Mariia Tarantsova <yashuk803@gmail.com>
+ */
+
 class CourseController extends AbstractController
 {
+    /**
+     * @var CourseRepositoryInterface
+     */
     private $coursePresentation;
+
+    /**
+     * @var LessonPresentationServiceInterface
+     */
     private $lessonPresentation;
+
+    /**
+     * @var ParameterBagInterface
+     */
     private $params;
 
     public function __construct(
@@ -39,7 +57,9 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/courses/", name="courses")
+     * Lists all Courses entities.
+     *
+     * @Route("/courses/", methods={"GET"}, name="courses")
      */
     public function index(): Response
     {
@@ -51,6 +71,8 @@ class CourseController extends AbstractController
     }
 
     /**
+     * Creates a new Courses entity.
+     *
      * @IsGranted("ROLE_USER")
      * @Route("/new-course", name="new-course")
      */
@@ -67,6 +89,7 @@ class CourseController extends AbstractController
             if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
                 $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
                 $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_courses');
+                //This help transcoding video in WebM format, when client want to squeeze video file
                 $transcoding = new Transcoding($course->getVideoFile(), $pathSave, $originName, new WebM());
                 $fileName = $transcoding->saveVideo();
 
@@ -89,10 +112,13 @@ class CourseController extends AbstractController
     }
 
     /**
+     * Displays a form to edit an existing Course entity.
+     * XmlHttpRequest used for create lessons and make relationship with course.
+     *
      * @IsGranted("ROLE_USER")
      * @Route("/edit-course/{id}", name="edit-course", requirements={"id"="^\d+$"})
      */
-    public function edit(Request $request, int $id)
+    public function edit(Request $request, int $id): Response
     {
         $course = $this->coursePresentation->findById($id);
         $lessons = $this->lessonPresentation->findByCourse($id);
@@ -133,7 +159,9 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/course/{id}", name="show-course", requirements={"id"="^\d+$"})
+     * Finds and displays a Course entity.
+     *
+     * @Route("/course/{id}", name="show-course", methods={"GET"}, requirements={"id"="^\d+$"})
      */
     public function show(int $id): Response
     {
@@ -145,16 +173,9 @@ class CourseController extends AbstractController
     }
 
     /**
+     * Find and show all lessons who belong to the course.
      *
-     * @Route("/course/{id}/reviews", name="reviews-course", requirements={"id"="^\d+$"})
-     */
-    public function review()
-    {
-    }
-
-    /**
-     *
-     * @Route("/course/{id}/syllabus", name="syllabus-course", requirements={"id"="^\d+$"})
+     * @Route("/course/{id}/syllabus", methods={"GET"}, name="syllabus-course", requirements={"id"="^\d+$"})
      */
     public function syllabus(int $id): Response
     {

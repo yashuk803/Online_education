@@ -53,6 +53,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
+        //When both the error the last email read from the session and displayed.
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['email']
@@ -79,11 +80,25 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $user;
     }
 
+    /**
+     * Only needed if need to check a password.
+     *
+     * @param mixed $credentials
+     * @param UserInterface $user
+     * @return bool
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
+    /**
+     * When authentication is successful redirect to home page.
+     * @param Request $request
+     * @param TokenInterface $token
+     * @param string $providerKey
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
@@ -93,8 +108,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         new RedirectResponse($this->urlGenerator->generate('index'));
     }
 
+    /**
+     * If fail login, the user should be redirected back to the login page.
+     *
+     * @return string
+     */
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('index');
+        return $this->urlGenerator->generate('login');
     }
 }

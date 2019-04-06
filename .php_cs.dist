@@ -1,4 +1,10 @@
 <?php
+$header = <<<HEADER
+This file is part of sorting-array package.
+(c) Tarantsova Mariia <yashuk803@gmail.com>
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+HEADER;
 $finder = \PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude('docs')
@@ -35,6 +41,11 @@ return \PhpCsFixer\Config::create()
         'compact_nullable_typehint' => true,
         'concat_space' => [
             'spacing' => 'one',
+        ],
+        'header_comment' => [
+             'header' => $header,
+             'commentType' => 'comment',
+             'separate' => 'both',
         ],
         'final_internal_class' => true,
         'function_to_constant' => true,
