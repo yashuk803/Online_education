@@ -48,7 +48,6 @@ class LessonController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
                 $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
                 $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_lessons');

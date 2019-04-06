@@ -63,6 +63,7 @@ class CourseController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $course->setUser($this->getUser());
+
             if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
                 $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
                 $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_courses');
