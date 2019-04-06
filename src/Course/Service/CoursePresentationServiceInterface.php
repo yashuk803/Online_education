@@ -11,4 +11,7 @@ interface CoursePresentationServiceInterface
     public function findByUser($userId): Collection;
 
     public function findById($id);
+
+    public function getLastFiveCourses(): Collection;
+
 }

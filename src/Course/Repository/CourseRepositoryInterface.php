@@ -10,4 +10,6 @@ interface CourseRepositoryInterface
     public function findByUser($userId);
 
     public function findById($id);
+
+    public function findFiveLastCourse();
 }

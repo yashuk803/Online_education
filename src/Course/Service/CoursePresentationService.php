@@ -49,4 +49,19 @@ final class CoursePresentationService implements CoursePresentationServiceInterf
 
         return   CourseMapper::entityToModel($courses);
     }
+
+    public function getLastFiveCourses(): Collection
+    {
+        $courses = $this->courseRepository->findFiveLastCourse();
+
+        $collection = new Collection();
+
+        foreach ($courses as $course) {
+            $collection->addCourse(
+                CourseMapper::entityToModel($course)
+            );
+        }
+
+        return $collection;
+    }
 }

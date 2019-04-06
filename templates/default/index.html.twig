@@ -43,92 +43,41 @@
                 <!-- single course -->
                 <div class="col-lg-12">
                     <div class="owl-carousel active_course">
-                        <div class="single_course">
-                            <div class="course_head">
-                                <img class="img-fluid" src="{{ asset('img/courses/c1.jpg') }}" alt=""/>
-                            </div>
-                            <div class="course_content">
-                                <span class="price">$25</span>
-                                <span class="tag mb-4 d-inline-block">design</span>
-                                <h4 class="mb-3">
-                                    <a href="course-details.html">Custom Product Design</a>
-                                </h4>
-                                <p>
-                                    One make creepeth man bearing their one firmament won't fowl
-                                    meat over sea
-                                </p>
-                                <div
-                                        class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4"
-                                >
-                                    <div class="authr_meta">
-                                        <img src="{{ asset('img/courses/author1.png') }}" alt=""/>
-                                        <span class="d-inline-block ml-2">Cameron</span>
-                                    </div>
-                                    <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                        <span class="meta_info"
-                                        ><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% for course in courses %}
 
                         <div class="single_course">
                             <div class="course_head">
-                                <img class="img-fluid" src="{{ asset('img/courses/c2.jpg') }}" alt=""/>
-                            </div>
-                            <div class="course_content">
-                                <span class="price">$25</span>
-                                <span class="tag mb-4 d-inline-block">design</span>
-                                <h4 class="mb-3">
-                                    <a href="course-details.html">Social Media Network</a>
-                                </h4>
-                                <p>
-                                    One make creepeth man bearing their one firmament won't fowl
-                                    meat over sea
-                                </p>
-                                <div
-                                        class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4"
-                                >
-                                    <div class="authr_meta">
-                                        <img src="{{ asset('img/courses/author2.png') }}" alt=""/>
-                                        <span class="d-inline-block ml-2">Cameron</span>
-                                    </div>
-                                    <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                        <span class="meta_info"
-                                        ><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                {% if  course.video %}
+                                    <video width="330px" height="259px" controls="controls" poster="">
+                                        <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                type='video/ogg; codecs="theora, vorbis"'>
+                                        <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                                        <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                type='video/webm; codecs="vp8, vorbis"'>
+                                        Элемент video не поддерживается вашим браузером.
+                                        <a href="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}">Скачайте
+                                            видео</a>.
+                                    </video>
+                                    {% else %}
+                                        <img class="img-fluid" src="{{ asset('img/courses/c1.jpg') }}" alt=""/>
+                                {% endif %}
 
-                        <div class="single_course">
-                            <div class="course_head">
-                                <img class="img-fluid" src="{{ asset('img/courses/c3.jpg') }}" alt=""/>
                             </div>
                             <div class="course_content">
-                                <span class="price">$25</span>
-                                <span class="tag mb-4 d-inline-block">design</span>
+                                <span class="price">₴{{ course.cost }}</span>
+                                <span class="tag mb-4 d-inline-block">Купить</span>
                                 <h4 class="mb-3">
-                                    <a href="course-details.html">Computer Engineering</a>
+                                    <a href="{{ path('show-course', {'id': course.id}) }}">{{course.name  }}</a>
                                 </h4>
                                 <p>
-                                    One make creepeth man bearing their one firmament won't fowl
-                                    meat over sea
+                                    {{ course.shortDescription|slice(0, 50) ~ '...' }}
                                 </p>
                                 <div
                                         class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4"
                                 >
                                     <div class="authr_meta">
-                                        <img src="{{ asset('img/courses/author3.png') }}" alt=""/>
-                                        <span class="d-inline-block ml-2">Cameron</span>
+                                        <span class="d-inline-block ml-2">{{ course.user.getFirstName  }}</span>
                                     </div>
                                     <div class="mt-lg-0 mt-3">
                       <span class="meta_info mr-4">
@@ -141,6 +90,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

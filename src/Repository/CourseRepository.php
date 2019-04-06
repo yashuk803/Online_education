@@ -38,4 +38,14 @@ class CourseRepository extends ServiceEntityRepository implements CourseReposito
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findFiveLastCourse()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults( 5 )
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
