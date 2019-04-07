@@ -1,7 +1,13 @@
 <?php
 
-namespace App\Course\Service;
+/*
+ * This file is part of Symfony DEMO Online Education Application.
+ * (c) Tarantsova Mariia <yashuk803@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace App\Course\Service;
 
 use App\Course\FormCourseModel;
 use App\Course\Repository\CourseRepositoryInterface;
@@ -18,13 +24,12 @@ final class CourseManagementService implements CourseManagementServiceInterface
 
     public function setData(Course $course, FormCourseModel $formCourseModel, ?string $projectDir): Course
     {
-
         $course->setName($formCourseModel->getName());
         $course->setAccessType($formCourseModel->getAccessType());
         $course->setDescription($formCourseModel->getDescription());
         $course->setShortDescription($formCourseModel->getShortDescription());
         $course->setCost($formCourseModel->getCost());
-      //  $course->setVideoFile($formCourseModel->getVideoFile());
+        //  $course->setVideoFile($formCourseModel->getVideoFile());
 //        $post->setContent($postType->getContent());
 //        if (null === $post->getDateCreation()) {
 //            $post->setDateCreation(new \DateTime());
@@ -38,7 +43,7 @@ final class CourseManagementService implements CourseManagementServiceInterface
 //        }
 
         $this->courseRepository->save($course);
+
         return $course;
     }
-
 }

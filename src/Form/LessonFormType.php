@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Symfony DEMO Onlain Education Application.
+ * This file is part of Symfony DEMO Online Education Application.
  * (c) Tarantsova Mariia <yashuk803@gmail.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,11 +22,11 @@ class LessonFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Название урока'
+                'label' => 'Название урока',
             ])
             ->add('description', TextareaType::class, [
                 'required'   => false,
-                'label' => 'Описание урока'
+                'label' => 'Описание урока',
             ])
             ->add('videoFile');
     }

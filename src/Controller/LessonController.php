@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Symfony DEMO Onlain Education Application.
+ * This file is part of Symfony DEMO Online Education Application.
  * (c) Tarantsova Mariia <yashuk803@gmail.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -84,8 +84,7 @@ class LessonController extends AbstractController
             $entityManager->persist($lesson);
             $entityManager->flush();
 
-            return $this->redirectToRoute('syllabus-course', array('id' => $lesson->getCourse()->getId()));
-
+            return $this->redirectToRoute('syllabus-course', ['id' => $lesson->getCourse()->getId()]);
         }
 
         return $this->render('lesson/edit.html.twig', [
