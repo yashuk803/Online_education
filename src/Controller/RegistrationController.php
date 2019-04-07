@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Symfony DEMO Onlain Education Application.
+ * (c) Tarantsova Mariia <yashuk803@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -13,7 +20,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * The controller builds the form and, on submit, encodes the plain password and saves the user.
  *
- * @package App\Controller
  * @author Mariia Tarantsova <yashuk803@gmail.com>
  */
 class RegistrationController extends AbstractController

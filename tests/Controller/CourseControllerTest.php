@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Symfony DEMO Onlain Education Application.
+ * (c) Tarantsova Mariia <yashuk803@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Tests\Controller;
 
 use App\Entity\Course;
@@ -19,7 +26,7 @@ class CourseControllerTest extends WebTestCase
     public function testCreate()
     {
         $faker = \Faker\Factory::create();
-        $courseName = 'Course Post Title '.mt_rand();
+        $courseName = 'Course Post Title ' . \mt_rand();
         $courseDescription = $faker->sentence(20);
         $courseShortDescription = $faker->sentence(50);
 
@@ -48,5 +55,4 @@ class CourseControllerTest extends WebTestCase
         $this->assertSame($courseDescription, $course->getDescription());
         $this->assertSame($courseShortDescription, $course->getShortDescription());
     }
-
 }

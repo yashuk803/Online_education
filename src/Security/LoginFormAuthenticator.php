@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Symfony DEMO Onlain Education Application.
+ * (c) Tarantsova Mariia <yashuk803@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Security;
 
 use App\Entity\User;
@@ -85,6 +92,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      *
      * @param mixed $credentials
      * @param UserInterface $user
+     *
      * @return bool
      */
     public function checkCredentials($credentials, UserInterface $user)
@@ -94,10 +102,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     /**
      * When authentication is successful redirect to home page.
+     *
      * @param Request $request
      * @param TokenInterface $token
      * @param string $providerKey
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
+     *
+     * @return null|RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {

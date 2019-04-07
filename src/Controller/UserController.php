@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Symfony DEMO Onlain Education Application.
+ * (c) Tarantsova Mariia <yashuk803@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Course\Service\CoursePresentationServiceInterface;
@@ -14,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route("/{slug}", requirements={"slug"="^@[A-Za-z0-9-_]+$"})
  * @IsGranted("ROLE_USER")
+ *
  * @author Mariia Tarantsova <yashuk803@gmail.com>
  */
 class UserController extends AbstractController

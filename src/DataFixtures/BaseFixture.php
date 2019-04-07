@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Symfony DEMO Onlain Education Application.
+ * (c) Tarantsova Mariia <yashuk803@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -63,6 +70,7 @@ abstract class BaseFixture extends Fixture
      * Method that returns just one object
      *
      * @param string $groupName
+     *
      * @return object
      */
     protected function getRandomReference(string $groupName)

@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This file is part of Symfony DEMO Onlain Education Application.
+ * (c) Tarantsova Mariia <yashuk803@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\Utils;
 
@@ -14,7 +20,6 @@ use Symfony\Component\HttpFoundation\File\File;
  * This class helper fo transcoding video file in
  * other format (WebM, WMV, X264).
  *
- * @package App\Utils
  * @author Mariia Tarantsova <yashuk803@gmail.com>
  */
 class Transcoding
@@ -92,6 +97,7 @@ class Transcoding
      * Return expansion format file
      *
      * @param $format
+     *
      * @return WebM|WMV|X264
      */
     private function getExpansion($format)
