@@ -99,8 +99,9 @@ class Course
      */
     private $cost;
 
-    public function __construct()
+    public function __construct(User $user)
     {
+        $this->user = $user;
         $this->accessType = 0;
         $this->publicationDate = new \DateTime();
         $this->updatedAt = new \DateTime();

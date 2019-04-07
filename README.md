@@ -1,4 +1,4 @@
-Symfony DEMO Onlain Education Application
+Symfony DEMO Online Education Application
 ===================
 
 This Application  in future  will be a  that platform is designed to create and distribute interactive educational content . Platform is suitable for a multitude of e-learning activities.
@@ -8,9 +8,7 @@ This Application  in future  will be a  that platform is designed to create and 
 Requirements
 -----
 * PHP 7.3 or higher;
-* Nginx:1.15;
 * mysql:5.7;
-* and the usual [Symfony website-skeleton.](https://symfony.com/doc/current/setup.html );
 
 Installation
 ----------------
@@ -27,27 +25,14 @@ Usage
 At start enter in root folder of application
 ```
 cd my_project/
-```
 
-Create file .env.local
- 
-Replace your values instead of variables "user"
-```
-APP_ENV=dev
-APP_SECRET=fe69862aa989924eea75eb93ed33d64c
-DATABASE_URL=mysql://user:user@mysql:3306/your_database
-  
-MYSQL_DATABASE=user
-MYSQL_USER=user
-MYSQL_PASSWORD=user
-MYSQL_HOST=mysql
-MYSQL_PORT=3306
+$ cp .env .env.local
 ```
 
 Run command:
 
 ```
-$ docker-compose up
+$ docker-compose up -d --build
 ```
 
 Tests

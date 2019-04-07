@@ -23,12 +23,6 @@ services:
     depends_on:
       - php-fpm
 
-  composer:
-    image: "composer"
-    volumes:
-      - ./:/app
-    command: install
-
   # MySQL
   mysql:
     image: mysql:5.7

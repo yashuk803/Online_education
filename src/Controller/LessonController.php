@@ -84,7 +84,8 @@ class LessonController extends AbstractController
             $entityManager->persist($lesson);
             $entityManager->flush();
 
-            return $this->redirect('/course/' . $lesson->getCourse()->getId() . '/syllabus');
+            return $this->redirectToRoute('syllabus-course', array('id' => $lesson->getCourse()->getId()));
+
         }
 
         return $this->render('lesson/edit.html.twig', [

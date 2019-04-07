@@ -22,13 +22,11 @@ class LessonFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Название урока',
-                'attr' => ['class' => 'form-control'],
+                'label' => 'Название урока'
             ])
             ->add('description', TextareaType::class, [
                 'required'   => false,
-                'label' => 'Описание урока',
-                'attr' => ['class' => 'form-control'],
+                'label' => 'Описание урока'
             ])
             ->add('videoFile');
     }

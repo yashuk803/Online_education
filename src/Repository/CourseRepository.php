@@ -55,4 +55,11 @@ class CourseRepository extends ServiceEntityRepository implements CourseReposito
             ->getResult()
             ;
     }
+
+    public function save(Course $course): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($course);
+        $em->flush();
+    }
 }

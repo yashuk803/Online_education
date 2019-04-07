@@ -49,7 +49,7 @@ class UserController extends AbstractController
      */
     public function courses(): Response
     {
-        $courses = $this->coursePresentation->findByUser($this->getUser());
+        $courses = $this->coursePresentation->findByUser($this->getUser()->getId());
 
         return $this->render('user/courses.html.twig', [
             'courses' => $courses,

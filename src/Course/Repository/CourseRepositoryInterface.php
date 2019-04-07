@@ -9,6 +9,8 @@
 
 namespace App\Course\Repository;
 
+use App\Entity\Course;
+
 interface CourseRepositoryInterface
 {
     public function findAll();
@@ -18,4 +20,6 @@ interface CourseRepositoryInterface
     public function findById($id);
 
     public function findFiveLastCourse();
+
+    public function save(Course $course): void;
 }

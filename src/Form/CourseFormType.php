@@ -9,7 +9,7 @@
 
 namespace App\Form;
 
-use App\Entity\Course;
+use App\Course\FormCourseModel;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -24,23 +24,19 @@ class CourseFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Название курса',
-                'attr' => ['class' => 'form-control'],
+                'label' => 'Название курса'
             ])
             ->add('shortDescription', TextareaType::class, [
                 'required'   => false,
                 'label' => 'Краткое описание курса',
-                'attr' => ['class' => 'form-control'],
             ])
             ->add('description', TextareaType::class, [
                 'required'   => false,
                 'label' => 'Полное описание курса',
-                'attr' => ['class' => 'form-control'],
             ])
             ->add('cost', MoneyType::class, [
                 'currency' => '',
                 'label' => 'Цена ₴',
-                'attr' => ['class' => 'form-control'],
             ])->add('videoFile')
             ->add('access_type', CheckboxType::class, [
                 'label'    => 'Опубликовать курс?',
@@ -51,7 +47,7 @@ class CourseFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Course::class,
+            'data_class' => FormCourseModel::class,
         ]);
     }
 }

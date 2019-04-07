@@ -9,7 +9,10 @@
 
 namespace App\Controller;
 
+use App\Course\CourseModel;
+use App\Course\FormCourseModel;
 use App\Course\Repository\CourseRepositoryInterface;
+use App\Course\Service\CourseManagementServiceInterface;
 use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Form\CourseFormType;
@@ -40,12 +43,14 @@ class CourseController extends AbstractController
     /**
      * @var CourseRepositoryInterface
      */
-    private $coursePresentation;
+    private $courseRepository;
 
     /**
      * @var LessonPresentationServiceInterface
      */
     private $lessonPresentation;
+
+    private $courseManagementService;
 
     /**
      * @var ParameterBagInterface
@@ -55,10 +60,12 @@ class CourseController extends AbstractController
     public function __construct(
         CourseRepositoryInterface $coursePresentation,
         LessonPresentationServiceInterface $lessonPresentation,
+        CourseManagementServiceInterface $courseManagementService,
         ParameterBagInterface $params
     ) {
-        $this->coursePresentation = $coursePresentation;
+        $this->courseRepository = $coursePresentation;
         $this->lessonPresentation = $lessonPresentation;
+        $this->courseManagementService = $courseManagementService;
         $this->params = $params;
     }
 
@@ -69,7 +76,7 @@ class CourseController extends AbstractController
      */
     public function index(): Response
     {
-        $courses = $this->coursePresentation->findAll();
+        $courses = $this->courseRepository->findAll();
 
         return $this->render('course/index.html.twig', [
             'courses' => $courses,
@@ -84,32 +91,33 @@ class CourseController extends AbstractController
      */
     public function create(Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        $course = new Course();
-        $form = $this->createForm(CourseFormType::class, $course);
+        $formCourse = new FormCourseModel();
+        $course = new Course($this->getUser());
+
+        $form = $this->createForm(CourseFormType::class, $formCourse);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $course->setUser($this->getUser());
+            $post = $this->courseManagementService->setData($course, $formCourse, '');
 
-            if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
-                $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
-                $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_courses');
-                //This help transcoding video in WebM format, when client want to squeeze video file
-                $transcoding = new Transcoding($course->getVideoFile(), $pathSave, $originName, new WebM());
-                $fileName = $transcoding->saveVideo();
-
-                $file = new File($course->getVideoFile());
-                $course->setVideoFile($file);
-                $course->setVideo($fileName);
-            }
-
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($course);
-            $entityManager->flush();
-
-            return $this->redirect('/edit-course/' . $course->getId());
+//            if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
+//                $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
+//                $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_courses');
+//                //This help transcoding video in WebM format, when client want to squeeze video file
+//                $transcoding = new Transcoding($course->getVideoFile(), $pathSave, $originName, new WebM());
+//                $fileName = $transcoding->saveVideo();
+//
+//                $file = new File($course->getVideoFile());
+//                $course->setVideoFile($file);
+//                $course->setVideo($fileName);
+//            }
+//
+//            $course->setUser($this->getUser());
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($course);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('edit-course', array('id' => $course->getId()));
         }
 
         return $this->render('course/create.html.twig', [
@@ -126,7 +134,7 @@ class CourseController extends AbstractController
      */
     public function edit(Request $request, int $id): Response
     {
-        $course = $this->coursePresentation->findById($id);
+        $course = $this->courseRepository->findById($id);
         $lessons = $this->lessonPresentation->findByCourse($id);
 
         if (!$course) {
@@ -171,7 +179,7 @@ class CourseController extends AbstractController
      */
     public function show(int $id): Response
     {
-        $course = $this->coursePresentation->findById($id);
+        $course = $this->courseRepository->findById($id);
 
         return $this->render('course/show.html.twig', [
             'course' => $course,
@@ -185,7 +193,7 @@ class CourseController extends AbstractController
      */
     public function syllabus(int $id): Response
     {
-        $course = $this->coursePresentation->findById($id);
+        $course = $this->courseRepository->findById($id);
         $lessons = $this->lessonPresentation->findByCourse($id);
 
         return $this->render('course/syllabus.html.twig', [

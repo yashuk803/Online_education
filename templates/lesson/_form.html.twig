@@ -1,6 +1,6 @@
 {{ form_start(lessonForm, { 'attr': {'class': 'contact_form'} }) }}
-  {{ form_row(lessonForm.name) }}
-  {{ form_row(lessonForm.description) }}
+  {{ form_row(lessonForm.name, { 'attr': {'class': 'form-control'} }) }}
+  {{ form_row(lessonForm.description, { 'attr': {'class': 'form-control'} }) }}
   {{ form_row(lessonForm.videoFile) }}
 <button type="submit" class="btn primary-btn">сохронить</button>
 <button type="submit" class="btn primary-btn" name="squeeze" >сохронить и сжать</button>

@@ -1,7 +1,7 @@
 {{ form_start(courseForm, { 'attr': {'class': 'contact_form'} }) }}
-{{ form_row(courseForm.name) }}
-{{ form_row(courseForm.shortDescription) }}
-{{ form_row(courseForm.description) }}
+{{ form_row(courseForm.name, {'attr': {'class': 'form-control'}}) }}
+{{ form_row(courseForm.shortDescription, {'attr': {'class': 'form-control'}}) }}
+{{ form_row(courseForm.description, {'attr': {'class': 'form-control'}}) }}
 <div class="custom-control custom-radio">
     <input type="radio" class="custom-control-input" id="paid" name="accessType">
     <label class="custom-control-label" for="paid">Платный курс</label>
@@ -10,7 +10,7 @@
     <input type="radio" class="custom-control-input" id="free" checked name="accessType">
     <label class="custom-control-label" for="free">Бесплатный курс</label>
 </div>
-{{ form_row(courseForm.cost) }}
+{{ form_row(courseForm.cost, {'attr': {'class': 'form-control'}}) }}
 {{ form_row(courseForm.videoFile) }}
 {{ form_row(courseForm.access_type) }}
 <button type="submit" class="btn primary-btn">сохронить</button>

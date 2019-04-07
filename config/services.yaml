@@ -4,9 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    app.path.avatar_images: /uploads/images/avatars/
-    app.path.video_path_courses: /uploads/video/courses/
-    app.path.video_path_lessons: /uploads/video/lessons/
+    app.path.avatar_images: '%kernel.project_dir%/public/uploads/images/avatars/'
+    app.path.video_path_courses: '%kernel.project_dir%/public/uploads/video/courses/'
+    app.path.video_path_lessons: '%kernel.project_dir%/public/uploads/video/lessons/'
 
 services:
     # default configuration for services in *this* file
@@ -33,4 +33,5 @@ services:
         autowire: true
 
     App\Course\Service\CoursePresentationServiceInterface: '@App\Course\Service\CoursePresentationService'
+    App\Course\Service\CourseManagementServiceInterface: '@App\Course\Service\CourseManagementService'
     App\Lesson\Service\LessonPresentationServiceInterface: '@App\Lesson\Service\LessonPresentationService'
