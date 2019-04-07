@@ -9,7 +9,7 @@ Requirements
 -----
 * PHP 7.3 or higher;
 * Nginx:1.15;
-* mysql:8.0;
+* mysql:5.7;
 * and the usual [Symfony website-skeleton.](https://symfony.com/doc/current/setup.html );
 
 Installation
