@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Course\Repository\CourseRepositoryInterface;
+use App\Course\Service\CoursePresentationServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class DefaultController extends AbstractController
 {
     private $coursePresentation;
 
-    public function __construct(CourseRepositoryInterface $coursePresentation)
+    public function __construct(CoursePresentationServiceInterface $coursePresentation)
     {
         $this->coursePresentation = $coursePresentation;
     }
@@ -28,7 +29,7 @@ class DefaultController extends AbstractController
      */
     public function index(): Response
     {
-        $courses = $this->coursePresentation->findFiveLastCourse();
+        $courses = $this->coursePresentation->getLastFiveCourses();
 
 
         return $this->render('default/index.html.twig', [

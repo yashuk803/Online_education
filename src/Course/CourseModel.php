@@ -22,6 +22,8 @@ final class CourseModel
     private $user;
     private $video;
     private $videoFile;
+    private $firstName;
+
 
     public function __construct(
         int $id,
@@ -96,5 +98,14 @@ final class CourseModel
             // if 'updatedAt' is not defined in your entity, use another property
             $this->updatedAt = new \DateTimeImmutable();
         }
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+    public function setFirstName(string  $firstName): void
+    {
+        $this->firstName = $firstName;
     }
 }

@@ -11,9 +11,8 @@ use FFMpeg\Format\Video\X264;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * Helper Class fo transcoding video file in
+ * This class helper fo transcoding video file in
  * other format (WebM, WMV, X264).
- *
  *
  * @package App\Utils
  * @author Mariia Tarantsova <yashuk803@gmail.com>

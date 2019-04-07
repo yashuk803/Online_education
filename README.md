@@ -1,7 +1,7 @@
 Symfony DEMO Onlain Education Application
 ===================
 
-Edustage is the future platform that is designed to create and distribute interactive educational content . Platform is suitable for a multitude of e-learning activities.
+This Application  in future  will be a  that platform is designed to create and distribute interactive educational content . Platform is suitable for a multitude of e-learning activities.
 
 ------------
 
@@ -24,14 +24,14 @@ $ https://github.com/yashuk803/Online_education.git
 
 Usage
 ----------------
-Run command in root directory:
+At start enter in root folder of application
 ```
 cd my_project/
 ```
 
 Create file .env.local
  
-Where to substitute user your values ​​instead of a variable:
+Replace your values instead of variables "user"
 ```
 APP_ENV=dev
 APP_SECRET=fe69862aa989924eea75eb93ed33d64c
@@ -44,7 +44,7 @@ MYSQL_HOST=mysql
 MYSQL_PORT=3306
 ```
 
-Then run command:
+Run command:
 
 ```
 $ docker-compose up

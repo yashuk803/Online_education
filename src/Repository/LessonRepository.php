@@ -21,7 +21,7 @@ class LessonRepository extends ServiceEntityRepository implements lessonReposito
         parent::__construct($registry, Lesson::class);
     }
 
-    public function findByCourse(int $courseId): Course
+    public function findByCourse(int $courseId)
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.course = :course')
