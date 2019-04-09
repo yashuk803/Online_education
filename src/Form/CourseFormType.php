@@ -9,14 +9,13 @@
 
 namespace App\Form;
 
-use App\Course\FormCourseModel;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class CourseFormType extends AbstractType
 {
@@ -37,17 +36,11 @@ class CourseFormType extends AbstractType
             ->add('cost', MoneyType::class, [
                 'currency' => '',
                 'label' => 'Цена ₴',
-            ])->add('videoFile')
+            ])
+            ->add('videoFile', VichFileType::class)
             ->add('access_type', CheckboxType::class, [
                 'label'    => 'Опубликовать курс?',
                 'required' => false,
             ]);
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => FormCourseModel::class,
-        ]);
     }
 }
