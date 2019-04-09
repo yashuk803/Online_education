@@ -32,12 +32,11 @@ class LessonFixture extends BaseFixture implements DependentFixtureInterface
     protected function loadData(ObjectManager $manager)
     {
         $this->createMany(10, self::COURSE_LESSON, function () {
-            $lesson = new Lesson();
+            $lesson = new Lesson($this->getRandomReference(CourseFixture::COURSE_REFERENCE));
 
             $faker = \Faker\Factory::create();
 
             $lesson->setVideo($faker->file($this->sourceDirectory, $this->targetDirectory, false));
-            $lesson->setCourse($this->getRandomReference(CourseFixture::COURSE_REFERENCE));
             $lesson->setDescription($faker->sentence(5));
             $lesson->setName($faker->sentence(2));
             $lesson->setCreatedAt($this->faker->dateTime);
