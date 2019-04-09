@@ -14,7 +14,7 @@ vich_uploader:
             delete_on_remove:   true
         video_lessons:
             uri_prefix: '%kernel.project_dir%/public%app.path.video_path_lessons%'
-            upload_destination: '%app.path.video_path_lessons%'
+            upload_destination: '%kernel.project_dir%/public%app.path.video_path_lessons%'
 
             delete_on_update:   true
             delete_on_remove:   true

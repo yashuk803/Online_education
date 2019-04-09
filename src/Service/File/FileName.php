@@ -11,6 +11,9 @@ namespace App\Service\File;
 
 class FileName implements FileNameInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getBaseName(string $originName): string
     {
         $name = \explode('.', $originName);

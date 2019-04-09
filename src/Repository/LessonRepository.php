@@ -46,6 +46,10 @@ class LessonRepository extends ServiceEntityRepository implements lessonReposito
             ->getOneOrNullResult()
             ;
     }
+
+    /**
+     * {@inheritdoc}
+     */
     public function save(Lesson $lesson): void
     {
         $em = $this->getEntityManager();

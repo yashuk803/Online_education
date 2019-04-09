@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     var template = new Template();
 
-    $("form.contact_form").on("submit", function(e){
+    $("form.lesson-form-ajax").on("submit", function(e){
         e.preventDefault();
         var varningText = $('.warning-text');
         var listLesson = $('.list-lessons');
@@ -30,7 +30,6 @@ $(document).ready(function() {
             data: data,
             success: function(data)
             {
-                console.log(data);
                 varningText.css('display', 'none');
                 listLesson.append(template.lesson(data.name, "/edit-lesson/" + data.id))
                 $('#lessons').find('input[type=text]').val('')

@@ -56,6 +56,9 @@ class CourseRepository extends ServiceEntityRepository implements CourseReposito
             ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function save(Course $course): void
     {
         $em = $this->getEntityManager();

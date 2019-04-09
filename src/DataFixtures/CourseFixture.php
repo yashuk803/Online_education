@@ -33,7 +33,9 @@ class CourseFixture extends BaseFixture implements DependentFixtureInterface
     protected function loadData(ObjectManager $manager)
     {
         $this->createMany(10, self::COURSE_REFERENCE, function () {
-            $course = new Course($this->getRandomReference(UserFixture::USER_REFERENCE));
+            $user = $this->getRandomReference(UserFixture::USER_REFERENCE);
+
+            $course = new Course($user);
 
             $faker = \Faker\Factory::create();
 

@@ -11,5 +11,12 @@ namespace App\Service\File;
 
 interface FileNameInterface
 {
+    /**
+     * Returns file without extension
+     *
+     * @param string $originName
+     *
+     * @return string
+     */
     public function getBaseName(string $originName): string;
 }

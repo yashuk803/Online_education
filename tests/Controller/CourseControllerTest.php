@@ -18,7 +18,7 @@ class CourseControllerTest extends WebTestCase
     public function testIndex()
     {
         $client = static::createClient();
-        $client->request('GET', '/courses/');
+        $client->request('GET', '/courses');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }

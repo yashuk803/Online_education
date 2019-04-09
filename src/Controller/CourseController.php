@@ -92,7 +92,7 @@ class CourseController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $course = $this->courseManagementService->setData(
                 $course,
                 $formCourse,

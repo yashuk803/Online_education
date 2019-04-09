@@ -96,11 +96,6 @@ final class FormCourseModel
     public function setVideoFile(File $video = null)
     {
         $this->videoFile = $video;
-
-        if ($video) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            //$this->updatedAt = new \DateTimeImmutable();
-        }
     }
     public function getVideoFile()
     {

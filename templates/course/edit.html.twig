@@ -72,7 +72,7 @@
                                             </p>
                                         {% endif %}
                                         <div class="list-lessons"></div>
-                                        {{ form_start(lessonForm, { 'attr': {'class': 'contact_form', 'data-url': path('edit-course', {'id': course.id}) }}) }}
+                                        {{ form_start(lessonForm, { 'attr': {'class': 'contact_form lesson-form-ajax', 'data-url': path('edit-course', {'id': course.id}) }}) }}
                                         {{ form_row(lessonForm.name, {'attr': {'class': 'form-control', 'id':'lesson_form_name'}}) }}
                                         <button type="submit" class="btn primary-btn">Добавить урок</button>
                                        {{ form_end(lessonForm) }}

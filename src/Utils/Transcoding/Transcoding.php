@@ -83,7 +83,7 @@ class Transcoding
     public function saveVideo(): string
     {
         $ffmpeg = FFMpeg::create();
-
+        dd($ffmpeg);
         $ffmpeg->open($this->file)->save($this->format, $this->path . $this->fileName . self::WEBM);
 
         return $this->fileName . self::WEBM;

@@ -13,6 +13,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Utils\Transcoding\Factory;
 use App\Utils\Transcoding\Transcoding;
 
+/**
+ * File manager for uploads and transcoding files to project.
+ *
+ * @author Mariia Tarantsova <yashuk803@gmail.com>
+ */
 class FileManager implements FileManagerInterface
 {
     private $fileName;
