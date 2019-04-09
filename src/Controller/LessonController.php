@@ -13,7 +13,6 @@ use App\Course\Service\CoursePresentationServiceInterface;
 use App\Entity\Lesson;
 use App\Form\LessonFormType;
 use App\Lesson\FormLessonModel;
-use App\Lesson\Repository\LessonRepositoryInterface;
 use App\Lesson\Service\LessonManagementServiceInterface;
 use App\Lesson\Service\LessonPresentationServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
