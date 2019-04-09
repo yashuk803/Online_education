@@ -103,7 +103,7 @@ final class CourseModel
         // otherwise the event listeners won't be called and the file is lost
         if ($video) {
             // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->publicationDate = new \DateTimeImmutable();
         }
     }
 
@@ -114,5 +114,10 @@ final class CourseModel
     public function setFirstName(string  $firstName): void
     {
         $this->firstName = $firstName;
+    }
+
+    public function isCourseAuthor(int $userId): bool
+    {
+        return $this->user === $userId;
     }
 }

@@ -9,8 +9,9 @@
 
 namespace App\Course;
 
-use Vich\UploaderBundle\Entity\File;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class CourseModel
@@ -24,9 +25,34 @@ final class FormCourseModel
     private $accessType;
     private $cost;
     private $shortDescription;
+
+    /**
+     * @Assert\File(
+     * maxSize = "500M",
+     * mimeTypes = {"video/mpeg", "video/mp4", "video/quicktime", "video/x-ms-wmv", "video/x-msvideo", "video/x-flv", "video/ogv"},
+     * mimeTypesMessage = "ce format de video est inconnu",
+     * uploadIniSizeErrorMessage = "uploaded file is larger than the upload_max_filesize PHP.ini setting",
+     * uploadFormSizeErrorMessage = "uploaded file is larger than allowed by the HTML file input field",
+     * uploadErrorMessage = "uploaded file could not be uploaded for some unknown reason",
+     * maxSizeMessage = "fichier trop volumineux"
+     * )
+     * @Vich\UploadableField(mapping="video_courses", fileNameProperty="video")
+     *
+     * @var File
+     */
     private $videoFile;
 
+    private $video;
 
+
+    public function getVideo()
+    {
+        return $this->video;
+    }
+    public function setVideo($video): void
+    {
+        $this->video = $video;
+    }
     public function getCost()
     {
         return $this->cost;
@@ -70,6 +96,11 @@ final class FormCourseModel
     public function setVideoFile(File $video = null)
     {
         $this->videoFile = $video;
+
+        if ($video) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            //$this->updatedAt = new \DateTimeImmutable();
+        }
     }
     public function getVideoFile()
     {

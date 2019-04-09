@@ -12,36 +12,47 @@ namespace App\Course\Service;
 use App\Course\FormCourseModel;
 use App\Course\Repository\CourseRepositoryInterface;
 use App\Entity\Course;
+use App\Service\File\FileManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 final class CourseManagementService implements CourseManagementServiceInterface
 {
     private $courseRepository;
+    private $params;
+    private $fileManager;
 
-    public function __construct(CourseRepositoryInterface $courseRepository)
-    {
+    public function __construct(
+        CourseRepositoryInterface $courseRepository,
+        ParameterBagInterface $params,
+        FileManagerInterface $fileManager
+    ) {
         $this->courseRepository = $courseRepository;
+        $this->params = $params;
+        $this->fileManager = $fileManager;
     }
 
-    public function setData(Course $course, FormCourseModel $formCourseModel, ?string $projectDir): Course
+    public function setData(Course $course, FormCourseModel $formCourseModel, bool $transcoding): Course
     {
         $course->setName($formCourseModel->getName());
         $course->setAccessType($formCourseModel->getAccessType());
         $course->setDescription($formCourseModel->getDescription());
         $course->setShortDescription($formCourseModel->getShortDescription());
         $course->setCost($formCourseModel->getCost());
-        //  $course->setVideoFile($formCourseModel->getVideoFile());
-//        $post->setContent($postType->getContent());
-//        if (null === $post->getDateCreation()) {
-//            $post->setDateCreation(new \DateTime());
-//        }
-//        if (null != $postType->getImage()) {
-//            if (null != $post->getImage()) {
-//                $this->fileManager->deleteImage($post);
-//            }
-//            $fileName = $this->fileManager->upload($postType->getImage());
-//            $post->setImage($fileName);
-//        }
 
+
+        if ($formCourseModel->getVideoFile()) {
+            if ($transcoding) {
+                $fileName = $this->fileManager->transcodingUpload(
+                    $formCourseModel->getVideoFile(),
+                    $this->params->get('app.path.video_path_courses')
+                );
+                $course->setVideoFile(new File($fileName));
+                $course->setVideo($fileName);
+            } else {
+                $course->setVideoFile($formCourseModel->getVideoFile());
+            }
+        }
         $this->courseRepository->save($course);
 
         return $course;

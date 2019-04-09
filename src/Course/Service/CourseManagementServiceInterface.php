@@ -14,5 +14,5 @@ use App\Entity\Course;
 
 interface CourseManagementServiceInterface
 {
-    public function setData(Course $course, FormCourseModel $formCourseModel, ?string $projectDir): Course;
+    public function setData(Course $course, FormCourseModel $formCourseModel, bool $transcoding): Course;
 }
