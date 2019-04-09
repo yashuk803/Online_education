@@ -9,9 +9,12 @@
 
 namespace App\Lesson\Repository;
 
+use App\Entity\Lesson;
+
 interface LessonRepositoryInterface
 {
     public function findAll();
     public function findByCourse(int $courseId);
     public function findById(int $id);
+    public function save(Lesson $course): void;
 }
