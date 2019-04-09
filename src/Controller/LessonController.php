@@ -9,18 +9,18 @@
 
 namespace App\Controller;
 
+use App\Course\Service\CoursePresentationServiceInterface;
+use App\Entity\Lesson;
 use App\Form\LessonFormType;
+use App\Lesson\FormLessonModel;
 use App\Lesson\Repository\LessonRepositoryInterface;
-use App\Utils\Transcoding;
-use FFMpeg\Format\Video\WebM;
+use App\Lesson\Service\LessonManagementServiceInterface;
+use App\Lesson\Service\LessonPresentationServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Controller used to any registered users edit lessons.
@@ -32,19 +32,20 @@ class LessonController extends AbstractController
     /**
      * @var LessonRepositoryInterface
      */
-    private $lessonPresentation;
+    private $lessonPresentationService;
 
-    /**
-     * @var ParameterBagInterface
-     */
-    private $params;
+    private $coursePresentation;
+
+    private $lessonManagementService;
 
     public function __construct(
-        LessonRepositoryInterface $lessonPresentation,
-        ParameterBagInterface $params
+        LessonPresentationServiceInterface $lessonPresentationService,
+        CoursePresentationServiceInterface $coursePresentation,
+        LessonManagementServiceInterface $lessonManagementService
     ) {
-        $this->lessonPresentation = $lessonPresentation;
-        $this->params = $params;
+        $this->lessonPresentationService = $lessonPresentationService;
+        $this->lessonManagementService = $lessonManagementService;
+        $this->coursePresentation = $coursePresentation;
     }
 
     /**
@@ -55,36 +56,29 @@ class LessonController extends AbstractController
      */
     public function edit(
         Request $request,
-        AuthorizationCheckerInterface $authChecker,
         int $id
     ): Response {
-        $lesson = $this->lessonPresentation->findById($id);
+        $lesson = $this->lessonPresentationService->findById($id);
+        $course = $this->coursePresentation->findById($lesson->getCourses());
 
-        if ($this->getUser()->getId() !== $lesson->getCourse()->getUser()->getId()) {
+        $formLesson = new FormLessonModel();
+
+        if (!$course->isCourseAuthor($this->getUser()->getId())) {
             throw $this->createAccessDeniedException('Access denied');
         }
 
-        $form = $this->createForm(LessonFormType::class, $lesson);
+        $form = $this->createForm(LessonFormType::class, $formLesson);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($request->request->has('squeeze') && $request->files->get('lesson_form')['videoFile']) {
-                $originName = ($request->files->get('lesson_form')['videoFile'])->getClientOriginalName();
-                $pathSave = $this->params->get('kernel.project_dir') . '/public' . $this->params->get('app.path.video_path_lessons');
-                //This help transcoding video in WebM format, when client want to squeeze video file
-                $transcoding = new Transcoding($lesson->getVideoFile(), $pathSave, $originName, new WebM());
-                $fileName = $transcoding->saveVideo();
+            $formLesson->setCourse($course->getId());
+            $this->lessonManagementService->setData(
+                new Lesson(),
+                $formLesson,
+                $request->request->has('squeeze')
+            );
 
-                $file = new File($lesson->getVideoFile());
-                $lesson->setVideoFile($file);
-                $lesson->setVideo($fileName);
-            }
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($lesson);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('syllabus-course', ['id' => $lesson->getCourse()->getId()]);
+            return $this->redirectToRoute('syllabus-course', ['id' => $course->getId()]);
         }
 
         return $this->render('lesson/edit.html.twig', [
