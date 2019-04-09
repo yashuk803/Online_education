@@ -46,4 +46,10 @@ class LessonRepository extends ServiceEntityRepository implements lessonReposito
             ->getOneOrNullResult()
             ;
     }
+    public function save(Lesson $lesson): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($lesson);
+        $em->flush();
+    }
 }
