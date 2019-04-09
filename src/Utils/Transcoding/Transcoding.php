@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Utils;
+namespace App\Utils\Transcoding;
 
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\FormatInterface;
@@ -26,9 +26,9 @@ class Transcoding
 {
     const KILOBITRATE = 200;
 
-    const MP4  = '.mp4';
-    const WMV  = '.wmv';
-    const WEBM = '.webm';
+    private const MP4  = '.mp4';
+    private const WMV  = '.wmv';
+    private const WEBM = '.webm';
 
     /**
      * A file in the file system.
@@ -60,13 +60,18 @@ class Transcoding
      */
     private $expansion;
 
-    public function __construct(File $file, string $path, string $fileName, FormatInterface $format)
-    {
+    public function __construct(
+        File $file,
+        string $path,
+        string $fileName,
+        FormatInterface $format
+    ) {
         $this->file = $file;
         $this->path = $path;
-        $this->fileName = $this->getBaseName($fileName);
+        $this->fileName = $fileName;
         $this->expansion = $this->getExpansion($format);
         $this->format = $format;
+        $this->setKiloBitrate(self::KILOBITRATE);
     }
 
     /**
@@ -75,10 +80,8 @@ class Transcoding
      *
      * @return string
      */
-    public function saveVideo()
+    public function saveVideo(): string
     {
-        $this->format->setKiloBitrate(self::KILOBITRATE);
-
         $ffmpeg = FFMpeg::create();
 
         $ffmpeg->open($this->file)->save($this->format, $this->path . $this->fileName . self::WEBM);
@@ -86,34 +89,38 @@ class Transcoding
         return $this->fileName . self::WEBM;
     }
 
-    private function getBaseName($fileName)
-    {
-        $list = \explode('.', $fileName);
-
-        return $list[0];
-    }
 
     /**
-     * Return expansion format file
+     *  Return expansion format file.
      *
-     * @param $format
+     * @param FormatInterface $format
      *
-     * @return WebM|WMV|X264
+     * @return string
      */
-    private function getExpansion($format)
+    public function getExpansion(FormatInterface $format): string
     {
+        $exp = '';
+
         if ($format instanceof WebM) {
-            return new WebM();
+            $exp =  self::WEBM;
+        } elseif ($format instanceof X264) {
+            $exp =  self::MP4;
+        } elseif ($format instanceof WMV) {
+            $exp = self::WMV;
+        } else {
+            $exp = self::MP4;
         }
 
-        if ($format instanceof X264) {
-            return new X264();
-        }
+        return $exp;
+    }
 
-        if ($format instanceof WMV) {
-            return new WMV();
-        }
+    public function setKiloBitrate($kilobitrate)
+    {
+        $this->format->setKiloBitrate($kilobitrate);
+    }
 
-        return new X264();
+    public function getKiloBitrate()
+    {
+        return $this->format->getKiloBitrate();
     }
 }
