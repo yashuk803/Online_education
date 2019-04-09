@@ -37,14 +37,14 @@
                                     <div class="blog_post">
                                         {% if  course.video %}
                                             <video width="400" height="300" controls="controls" poster="">
-                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Course\\FormCourseModel') }}"
                                                         type='video/ogg; codecs="theora, vorbis"'>
-                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Course\\FormCourseModel') }}"
                                                         type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
+                                                <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Course\\FormCourseModel') }}"
                                                         type='video/webm; codecs="vp8, vorbis"'>
                                                 Элемент video не поддерживается вашим браузером.
-                                                <a href="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}">Скачайте
+                                                <a href="{{ vich_uploader_asset(course, 'videoFile', 'App\\Course\\FormCourseModel') }}">Скачайте
                                                     видео</a>.
                                             </video>
                                         {% endif %}

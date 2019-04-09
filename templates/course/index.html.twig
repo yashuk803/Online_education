@@ -32,8 +32,8 @@
                                 <div class="col-md-3">
                                     <div class="blog_info text-right">
                                         <ul class="blog_meta list">
-                                            <li><a href="#">{{ course.user.getFirstName}}<i class="ti-user"></i></a></li>
-                                            <li><a href="#">{{ course.updatedAt|date("F jS \\a\\t g:ia") }}<i class="ti-calendar"></i></a></li>
+                                            <li><a href="#">{{ course.getFirstName}}<i class="ti-user"></i></a></li>
+                                            <li><a href="#">{{ course.publicationDate|date("F jS \\a\\t g:ia") }}<i class="ti-calendar"></i></a></li>
                                             <li><a href="#">1.2M Views<i class="ti-eye"></i></a></li>
                                         </ul>
                                     </div>
@@ -64,7 +64,8 @@
 
                                             </p>
                                             <span class="price"> ₴{{ course.cost }}</span>
-                                            {% if not (app.user) or  (course.user.getId != app.user.getId) %}
+
+                                            {% if not ((app.user) and (course.isCourseAuthor(app.user.getId))) %}
                                             <a href="#" class="blog_btn">
                                                 Купить курс
                                             </a>

@@ -49,6 +49,7 @@
                             <div class="course_head">
                                 {% if  course.video %}
                                     <video width="330px" height="259px" controls="controls" poster="">
+
                                         <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"
                                                 type='video/ogg; codecs="theora, vorbis"'>
                                         <source src="{{ vich_uploader_asset(course, 'videoFile', 'App\\Entity\\Course') }}"

@@ -72,17 +72,10 @@
                                             </p>
                                         {% endif %}
                                         <div class="list-lessons"></div>
-                                        <form method="post" id="lessons" class="ajaxForm"
-                                              action="{{ path('edit-course', {'id': course.id }) }}">
-                                            <div class="form-group">
-                                                <label for="lesson_form_name" class="required">Название урока</label>
-                                                <input type="text" id="lesson_form_name" name="name"
-                                                       required="required" class="form-control form-control">
-                                            </div>
-                                            <input type="hidden" name="_csrf_token"
-                                                   value="{{ csrf_token('authenticate') }}">
-                                            <button type="submit" class="btn btn-success"> Добавить урок</button>
-                                        </form>
+                                        {{ form_start(lessonForm, { 'attr': {'class': 'contact_form', 'data-url': path('edit-course', {'id': course.id}) }}) }}
+                                        {{ form_row(lessonForm.name, {'attr': {'class': 'form-control', 'id':'lesson_form_name'}}) }}
+                                        <button type="submit" class="btn primary-btn">Добавить урок</button>
+                                       {{ form_end(lessonForm) }}
                                     </div>
                                 </div>
                             </div>
