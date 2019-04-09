@@ -5,11 +5,6 @@ This Application  in future  will be a  that platform is designed to create and 
 
 ------------
 
-Requirements
------
-* PHP 7.3 or higher;
-* mysql:5.7;
-
 Installation
 ----------------
 
@@ -18,7 +13,6 @@ Clone this project
 ```
 $ https://github.com/yashuk803/Online_education.git
 ```
-
 
 Usage
 ----------------
@@ -44,3 +38,7 @@ Execute this command to run tests:
 $ cd my_project/
 $ ./bin/phpunit
 ```
+
+Contacts: yashuk803@gmail.com
+
+Copyright (c) 2019, Mariia Tarantsova
