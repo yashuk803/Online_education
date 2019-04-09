@@ -41,17 +41,12 @@ class CourseController extends AbstractController
 {
     private $coursePresentation;
 
-    /**
-     * @var LessonPresentationServiceInterface
-     */
     private $lessonPresentation;
 
     private $courseManagementService;
+
     private $lessonManagementService;
 
-    /**
-     * @var ParameterBagInterface
-     */
     private $params;
 
     public function __construct(

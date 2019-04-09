@@ -29,9 +29,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LessonController extends AbstractController
 {
-    /**
-     * @var LessonRepositoryInterface
-     */
     private $lessonPresentationService;
 
     private $coursePresentation;
