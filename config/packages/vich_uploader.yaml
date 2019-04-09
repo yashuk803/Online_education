@@ -4,19 +4,17 @@ vich_uploader:
     mappings:
         avatars:
             uri_prefix: '%app.path.avatar_images%'
-            upload_destination: '%app.path.avatar_images%'
-            inject_on_load:     false
+            upload_destination: '%kernel.project_dir%/public%app.path.avatar_images%'
             delete_on_update:   true
             delete_on_remove:   true
         video_courses:
             uri_prefix: '%app.path.video_path_courses%'
-            upload_destination: '%app.path.video_path_courses%'
-            inject_on_load:     false
+            upload_destination: '%kernel.project_dir%/public%app.path.video_path_courses%'
             delete_on_update:   true
             delete_on_remove:   true
         video_lessons:
-            uri_prefix: '%app.path.video_path_lessons%'
+            uri_prefix: '%kernel.project_dir%/public%app.path.video_path_lessons%'
             upload_destination: '%app.path.video_path_lessons%'
-            inject_on_load:     false
+
             delete_on_update:   true
             delete_on_remove:   true
