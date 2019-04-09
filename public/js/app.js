@@ -12,24 +12,30 @@ class Template{
 }
 
 $(document).ready(function() {
-    var varningText = $('.warning-text');
-    var listLesson = $('.list-lessons');
+
     var template = new Template();
 
-    $('#lessons').submit(function (e) {
+    $("form.contact_form").on("submit", function(e){
         e.preventDefault();
-        var form = $(this);
-        var url = form.attr('action');
+        var varningText = $('.warning-text');
+        var listLesson = $('.list-lessons');
+        let data = {};
+        $(this).serializeArray().forEach((object)=>{
+            data[object.name] = object.value;
+        });
+        var url = $(this).attr('data-url');
         $.ajax({
             type: "post",
             url: url,
-            data: form.serialize(),
+            data: data,
             success: function(data)
             {
+                console.log(data);
                 varningText.css('display', 'none');
                 listLesson.append(template.lesson(data.name, "/edit-lesson/" + data.id))
                 $('#lessons').find('input[type=text]').val('')
             }
         });
+
     })
 });
