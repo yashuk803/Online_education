@@ -50,26 +50,32 @@ class LessonModel
     {
         return $this->id;
     }
+
     public function getName(): string
     {
         return $this->name;
     }
+
     public function getCourses(): int
     {
         return $this->course;
     }
+
     public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
+
     public function setVideo($video): void
     {
         $this->video = $video;
     }
+
     public function getVideo(): ?string
     {
         return $this->video;
     }
+
     public function setVideoFile(File $video = null)
     {
         $this->videoFile = $video;
